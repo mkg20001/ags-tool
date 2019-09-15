@@ -1,0 +1,125 @@
+/* Init */
+
+.ui {
+  min-height: 100vh; /* without this, dark mode looks messed up */
+}
+
+.ui-dark .bg-dark {
+  background: #464646 !important
+}
+
+/* Layout */
+
+.page-title-mini h1 {
+  font-size: 3.5em;
+  margin-bottom: 48px;
+}
+
+.page-title-mini-inner {
+  max-width: 512px;
+  text-align: left !important;
+}
+
+.lower-layer {
+  margin-left: 24px;
+}
+
+.apply-dark-magic { /* centers single div vertically */
+  display: flex;
+  align-items: row;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100vh;
+}
+
+.login-page {
+  background: url("../img/login-bg.jpg");
+  background-position: bottom;
+  background-size: cover;
+}
+
+/* Dark mode */
+
+.ui-dark {
+  background: #424242;
+  color: #fdfdfd;
+}
+
+.checkbox-inline, .checkbox label, .is-focused .checkbox-inline, .is-focused .checkbox label, .is-focused .radio-inline, .is-focused .radio label, .is-focused .switch label, .radio-inline, .radio label, .switch label {
+  color: rgba(255,255,255,.74);
+}
+
+.checkbox-inline:active, .checkbox-inline:focus, .checkbox-inline:hover, .checkbox label:active, .checkbox label:focus, .checkbox label:hover, .is-focused .checkbox-inline:active, .is-focused .checkbox-inline:focus, .is-focused .checkbox-inline:hover, .is-focused .checkbox label:active, .is-focused .checkbox label:focus, .is-focused .checkbox label:hover, .is-focused .radio-inline:active, .is-focused .radio-inline:focus, .is-focused .radio-inline:hover, .is-focused .radio label:active, .is-focused .radio label:focus, .is-focused .radio label:hover, .is-focused .switch label:active, .is-focused .switch label:focus, .is-focused .switch label:hover, .radio-inline:active, .radio-inline:focus, .radio-inline:hover, .radio label:active, .radio label:focus, .radio label:hover, .switch label:active, .switch label:focus, .switch label:hover {
+ color: rgba(255,255,255,.46);
+}
+
+/* Elements */
+
+
+.main-page-btn > * {
+  margin: 24px;
+}
+
+.main-page-btn .btn {
+  width: 186px;
+  height: 186px;
+}
+
+.main-page-btn i {
+  font-size: 86px !important;
+}
+
+/* Spinner */
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}
