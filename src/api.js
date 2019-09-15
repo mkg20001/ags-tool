@@ -3,7 +3,7 @@
 module.exports = async (server, config) => {
   server.route({
     method: 'POST',
-    path: '/',
+    path: '/api/v0/login',
     handler: function (request, h) {
       return 'Hello World!'
     }

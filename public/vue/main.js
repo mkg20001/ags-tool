@@ -1,6 +1,6 @@
 import Vue from 'vue/dist/vue.esm.js'
 
-// import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/browser'
 import VueResource from 'vue-resource'
 import GlobalOptions from 'vue-global-options'
 import VueRouter from 'vue-router'
@@ -25,13 +25,12 @@ const api = require('./api').default({
 window.swal = require('sweetalert2')
 const re = () => $('body').bootstrapMaterialDesign()
 
-/* TODO: possibly evaluate on-premise sentry usage
 if (!module.hot) {
   Sentry.init({
     dsn: 'DSN',
     integrations: [new Sentry.Integrations.Vue({ Vue })]
   })
-} */
+}
 
 Vue.use(VueResource)
 Vue.use(GlobalOptions, ['api', 'config', 'user', 'ui'])
