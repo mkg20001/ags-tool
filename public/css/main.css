@@ -1,60 +1,55 @@
-/* Init */
+/* Page */
 
-.ui {
-  min-height: 100vh; /* without this, dark mode looks messed up */
+body {
+  font-family: sans-serif;
+  margin: 0;
 }
 
-.ui-dark .bg-dark {
-  background: #464646 !important
-}
+/* Nav */
 
-/* Layout */
-
-.page-title-mini h1 {
-  font-size: 3.5em;
-  margin-bottom: 48px;
-}
-
-.page-title-mini-inner {
-  max-width: 512px;
-  text-align: left !important;
-}
-
-.lower-layer {
-  margin-left: 24px;
-}
-
-.apply-dark-magic { /* centers single div vertically */
+nav {
+  padding: 1em;
+  background: white;
+  border-radius: 0 0 0 0; /* TODO: add half-circle curve to bottom */
+  /* height: 7em; */
   display: flex;
-  align-items: row;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 100vh;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 2px 0 6px 4px grey;
 }
 
-.login-page {
-  background: url("../img/login-bg.jpg");
-  background-position: bottom;
-  background-size: cover;
+nav > div > ul {
+  display: flex;
 }
 
-/* Dark mode */
-
-.ui-dark {
-  background: #424242;
-  color: #fdfdfd;
+nav > div > ul, nav > div > ul > li > a {
+  color: #8f8f8f90;
+  font-weight: 600;
+  list-style: none;
+  margin: 1em;
+  margin-right: .5em;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: .5s;
 }
 
-.checkbox-inline, .checkbox label, .is-focused .checkbox-inline, .is-focused .checkbox label, .is-focused .radio-inline, .is-focused .radio label, .is-focused .switch label, .radio-inline, .radio label, .switch label {
-  color: rgba(255,255,255,.74);
+nav > div > ul > li > a:hover {
+  color: #8f8f8f;
 }
 
-.checkbox-inline:active, .checkbox-inline:focus, .checkbox-inline:hover, .checkbox label:active, .checkbox label:focus, .checkbox label:hover, .is-focused .checkbox-inline:active, .is-focused .checkbox-inline:focus, .is-focused .checkbox-inline:hover, .is-focused .checkbox label:active, .is-focused .checkbox label:focus, .is-focused .checkbox label:hover, .is-focused .radio-inline:active, .is-focused .radio-inline:focus, .is-focused .radio-inline:hover, .is-focused .radio label:active, .is-focused .radio label:focus, .is-focused .radio label:hover, .is-focused .switch label:active, .is-focused .switch label:focus, .is-focused .switch label:hover, .radio-inline:active, .radio-inline:focus, .radio-inline:hover, .radio label:active, .radio label:focus, .radio label:hover, .switch label:active, .switch label:focus, .switch label:hover {
- color: rgba(255,255,255,.46);
+.nav-right {
+  position: relative;
+  bottom: -6px;
+  display: inline;
+  height: 0;
+  font-size: 2.2em;
+  font-weight: 600;
+}
+
+.nav-left {
 }
 
 /* Elements */
-
 
 .main-page-btn > * {
   margin: 24px;

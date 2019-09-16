@@ -1,27 +1,17 @@
 <template>
   <div id="app" :class="$ui.dark ? 'ui ui-dark' : 'ui'">
-    <nav class="navbar navbar-dark bg-dark">
-      <div class="grid">
-        <a v-on:click="toggleNav">
-          <button type="button" class="btn bmd-btn-icon" style="margin-top: -8px; margin-right: 4px; color: white">
-            <i class="material-icons">menu</i>
-          </button>
-        </a>
-        <a class="navbar-brand" href="/">AGS Tool</a>
-      </div>
-      <button v-if="$user.loggedIn" type="button" class="btn" style="color: white; margin-bottom: -2px;">
-        <div class="grid">
-          <span style="position: relative; top: -4px; margin-right: 6px;">{{$user.display}}</span>
-          <i class="fas fa-user-circle" style="font-size: 1.5rem; line-height: 1"></i>
-        </div>
-      </button>
-      <button style="display: flex; background: #none;" v-else type="button" class="btn" style="color: rgb(200, 255, 202); margin-bottom: -2px;">
-        <div class="grid">
-          <span style="position: relative; top: -4px; margin-right: 6px;">{{ $t('login.title') }}</span>
-          <i class="fas fa-user-circle" style="font-size: 1.5rem; line-height: 1"></i>
-        </div>
-      </button>
-    </nav>
+  <nav>
+    <div class="nav-right">
+      <div class="brand">AGS Tools</div>
+    </div>
+    <div class="nav-left">
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="btn btn-main">Login</a></li>
+        <li><a href="#" class="btn btn-main-inv">Register</a></li>
+      </ul>
+    </div>
+  </nav>
 
     <div>
       <div v-if="$ui.loading">

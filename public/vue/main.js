@@ -8,12 +8,9 @@ import VueI18n from 'vue-i18n'
 
 import syncedData from './syncedData'
 
-import 'bootstrap-material-design/dist/css/bootstrap-material-design.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '../css/main.css'
 const $ = window.jQuery = require('jquery')
-window.Popper = require('popper.js').default
-require('bootstrap-material-design')
 
 if (!window.fetch) {
   require('whatwg-fetch')
@@ -23,7 +20,6 @@ const api = require('./api').default({
   versionPrefix: 'v0'
 })
 window.swal = require('sweetalert2')
-const re = () => $('body').bootstrapMaterialDesign()
 
 if (!module.hot) {
   Sentry.init({
@@ -69,17 +65,6 @@ $(document).on('click', 'a', function (e) {
 
 Vue.use(VueRouter)
 
-// TODO: possibly replace bootstrap material design with some better MDL-like
-let tm = 0
-document.addEventListener('DOMNodeInserted', event => {
-  try {
-    clearTimeout(tm)
-    tm = setTimeout(() => $(event.target).bootstrapMaterialDesign(), 10)
-  } catch (e) {
-    // pass
-  }
-})
-
 $(document).ready(async () => {
   // load user info
   let user
@@ -118,6 +103,4 @@ $(document).ready(async () => {
       return api.postJson('user/profile', {ui})
     })
   })
-
-  re()
 })
