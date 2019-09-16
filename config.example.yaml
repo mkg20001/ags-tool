@@ -1,4 +1,4 @@
 hapi:
   host: '::'
-  port: 5433
-mongodb: 'mongodb://localhost:27017/ags-tool'
+  port: 6778
+db: 'postgres://user:pass@example.com:5432/dbname'

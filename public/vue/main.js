@@ -51,7 +51,7 @@ const router = new VueRouter({
   routes: [
     {path: '/', component: require('./pages/home.vue').default},
     {path: '/settings', component: require('./pages/settings.vue').default},
-    {path: '/login', component: require('./pages/login.vue').default},
+    {path: '/pad/:id', component: require('./pages/pad.vue').default},
     {path: '*', component: require('./pages/404.vue').default}
   ]
 })

@@ -31,6 +31,7 @@
     "parcel": "^1.12.3",
     "popper.js": "^1.15.0",
     "relish": "^3.0.0",
+    "sequelize": "^5.18.4",
     "sweetalert2": "^8.17.1",
     "vue": "^2.6.10",
     "vue-global-options": "^1.0.1",

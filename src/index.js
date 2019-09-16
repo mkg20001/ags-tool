@@ -1,7 +1,7 @@
 'use strict'
 
 const Hapi = require('@hapi/hapi')
-const CatboxMongoDB = require('catbox-mongodb')
+const Sequelize = require('sequelize')
 const Joi = require('@hapi/joi')
 
 const pino = require('pino')
@@ -14,17 +14,6 @@ const Relish = require('relish')({
 })
 
 const init = async (config) => {
-  const mongodbDB = config.mongodb.split('/').pop().split('?').shift() // get uppercase part: mongodb://url:port/DB?something
-  config.hapi.cache = [{
-    provider: {
-      constructor: CatboxMongoDB,
-      options: {
-        uri: config.mongodb,
-        partition: mongodbDB
-      }
-    }
-  }]
-
   config.hapi.routes = {
     validate: {
       failAction: Relish.failAction
@@ -49,9 +38,13 @@ const init = async (config) => {
     plugin: require('@hapi/inert')
   })
 
+  const sequelize = new Sequelize(config.db)
+
   require('hapi-spa-serve')(server, {assets: require('path').join(__dirname, '../dist')})
 
-  await require('./api')(server, config)
+  await require('./api')(server, sequelize, config)
+
+  await sequelize.sync()
 
   await mongoose.connect(config.mongodb)
   await server.start()
