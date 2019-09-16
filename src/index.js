@@ -44,15 +44,12 @@ const init = async (config) => {
     plugin: require('@hapi/bell')
   })
 
-  await server.register({
-    plugin: require('@hapi/cookie')
-  })
-
   const sequelize = new Sequelize(config.db)
 
   require('hapi-spa-serve')(server, {assets: require('path').join(__dirname, '../dist')})
 
   await require('./api')(server, sequelize, config)
+
   const daPad = await require('da-pad/src/api')(server, sequelize, {
     canViewPad: async () => {
       return false

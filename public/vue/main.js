@@ -86,27 +86,14 @@ $(document).ready(async () => {
   let ui = {}
 
   if (!await api.areWeLoggedInYet()) {
-    user = false
-
-    router.beforeEach((to, from, next) => {
-      if (to.path !== '/login') {
-        next({ path: '/login', query: { redirect: from.fullPath } })
-      } else {
-        next()
-      }
-    })
+    user = {
+      loggedIn: false
+    }
   } else {
     user = await api.json('user/profile')
-    user.ui = ui = user.ui || {} // sync
-
-    router.beforeEach((to, from, next) => {
-      if (to.path === '/login') {
-        next(to.query.redirect)
-      } else {
-        next()
-      }
-    })
   }
+
+  user.config = ui = user.config || {} // sync
 
   // hide spinner
   $('#load').hide()

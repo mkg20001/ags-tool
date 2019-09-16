@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$user" id="app" :class="$ui.dark ? 'ui ui-dark' : 'ui'">
+  <div id="app" :class="$ui.dark ? 'ui ui-dark' : 'ui'">
     <nav class="navbar navbar-dark bg-dark">
       <div class="grid">
         <a v-on:click="toggleNav">
@@ -7,11 +7,17 @@
             <i class="material-icons">menu</i>
           </button>
         </a>
-        <a class="navbar-brand" href="/">PMail</a>
+        <a class="navbar-brand" href="/">AGS Tool</a>
       </div>
-      <button type="button" class="btn" style="color: white; margin-bottom: -2px;">
+      <button v-if="$user.loggedIn" type="button" class="btn" style="color: white; margin-bottom: -2px;">
         <div class="grid">
           <span style="position: relative; top: -4px; margin-right: 6px;">{{$user.display}}</span>
+          <i class="fas fa-user-circle" style="font-size: 1.5rem; line-height: 1"></i>
+        </div>
+      </button>
+      <button style="display: flex; background: #none;" v-else type="button" class="btn" style="color: rgb(200, 255, 202); margin-bottom: -2px;">
+        <div class="grid">
+          <span style="position: relative; top: -4px; margin-right: 6px;">{{ $t('login.title') }}</span>
           <i class="fas fa-user-circle" style="font-size: 1.5rem; line-height: 1"></i>
         </div>
       </button>
@@ -32,10 +38,6 @@
         <router-view></router-view>
       </div>
     </div>
-  </div>
-
-  <div v-else id="login">
-    <router-view></router-view>
   </div>
 </template>
 
