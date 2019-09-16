@@ -38,6 +38,10 @@ const init = async (config) => {
     plugin: require('@hapi/inert')
   })
 
+  await server.register({
+    plugin: require('@hapi/nes')
+  })
+
   const sequelize = new Sequelize(config.db)
 
   require('hapi-spa-serve')(server, {assets: require('path').join(__dirname, '../dist')})
