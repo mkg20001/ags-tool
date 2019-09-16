@@ -17,9 +17,10 @@ apps:
 parts:
   ags-tool:
     plugin: nodejs
-    node-engine: 10.16.3
+    nodejs-version: 10.16.3
+    nodejs-package-manager: yarn
     source: .
     override-build: |
-      npm i
-      npm run build
+      yarn
+      yarn run build
       snapcraftctl build
