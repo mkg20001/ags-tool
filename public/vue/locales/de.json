@@ -29,5 +29,9 @@
   "padadmin": {
     "title": "Pad-Verwaltung",
     "desc": "Hier können erstellte Pads verwaltet und zu Sitzungsprotokollen archiviert werden"
+  },
+  "protokolle": {
+    "title": "Protokolle",
+    "desc": "Sitzungsprotokolle (Pad Notizen sowie Sprachaufzeichnungen) der letzten Sitzungen"
   }
 }
