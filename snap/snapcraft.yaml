@@ -21,4 +21,4 @@ parts:
     source: .
     build-packages:
       - git
-      - python2
+      - python2.7
