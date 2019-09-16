@@ -27,6 +27,8 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="btn btn-danger btn-fab"><i class="fas fa-plus"></i></div>
   </div>
 </template>
 

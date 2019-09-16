@@ -13,6 +13,21 @@ body {
   margin-left: 24px;
 }
 
+.btn-fab {
+  border-radius: 50%;
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 64px;
+  height: 64px;
+}
+
+.btn-fab > * {
+  font-size: 1.6em;
+  margin-top: .5em;
+  margin-left: .1em;
+}
+
 /* Nav */
 
 nav {

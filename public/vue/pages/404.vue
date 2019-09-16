@@ -1,6 +1,7 @@
 <template>
   <div>
     <center>
+      <br>
       <h1>{{ $t('404.title') }}</h1>
       <h2>
         <tt>{{$route.path}}</tt><br>
