@@ -13,12 +13,13 @@ module.exports = async function (server, sequelize, options) {
 
   const authScheme = (server, {isDev}) => {
     server.state('sid', {
-      ttl: null,
+      ttl: 60 * 60 * 1000,
       isSecure: !isDev,
       isHttpOnly: isDev,
       encoding: 'base64json',
       clearInvalid: true,
-      strictHeader: true
+      strictHeader: true,
+      path: '/'
     })
 
     const scheme = {
@@ -102,6 +103,7 @@ module.exports = async function (server, sequelize, options) {
 
         let sid = hat()
         await cache.set(sid, user, 0)
+        h.state('sid', sid)
 
         return h.redirect('/')
       }

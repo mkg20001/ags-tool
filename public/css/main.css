@@ -5,6 +5,10 @@ body {
   margin: 0;
 }
 
+.margin-16 {
+  margin: 16px;
+}
+
 /* Nav */
 
 nav {

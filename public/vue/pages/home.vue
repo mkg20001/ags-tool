@@ -6,15 +6,20 @@
     <center>
       <h1 style="font-size: 4em">{{ $t('home.welcome') }}</h1>
       <br>
-      <span class="btn-group-lg main-page-btn">
-        <a href="/admin"> <!-- v-if="$user.permission.admin" -->
+      <span class="main-page-btn">
+        <a href="/admin/pad"> <!-- v-if="$user.permission.admin" -->
           <button type="button" class="btn btn-danger bmd-btn-fab">
-            <i class="fas fa-sliders-h"></i>
+            <i class="fas fa-list"></i>
           </button>
         </a>
-        <a href="/profile">
+        <a href="/tasks">
           <button type="button" class="btn btn-success bmd-btn-fab">
-            <i class="far fa-user-circle"></i>
+            <i class="fas fa-check-circle"></i>
+          </button>
+        </a>
+        <a href="/protokolle">
+          <button type="button" class="btn btn-warning bmd-btn-fab" style="color: white">
+            <i class="fas fa-archive"></i>
           </button>
         </a>
         <a href="/settings">

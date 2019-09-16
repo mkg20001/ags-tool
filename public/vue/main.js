@@ -57,7 +57,7 @@ window.router = router
 // click intercept
 $(document).on('click', 'a', function (e) {
   const href = $(this).attr('href')
-  if (href && href.startsWith('/')) {
+  if (href && href.startsWith('/') && !href.startsWith('/auth')) {
     e.preventDefault()
     router.push(href)
   }

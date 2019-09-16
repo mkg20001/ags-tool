@@ -12,7 +12,15 @@ module.exports = async (server, sequelize, config) => {
     options: {
       auth: 'session',
       handler: async (request, h) => {
-        return request.auth
+        const {config, id, email, displayname: display} = request.auth.credentials
+
+        return {
+          loggedIn: true,
+          config,
+          id,
+          email,
+          display
+        }
       }
     }
   })

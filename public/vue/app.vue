@@ -2,9 +2,18 @@
   <div id="app" :class="$ui.dark ? 'ui ui-dark' : 'ui'">
     <nav class="navbar navbar-light bg-light">
       <a class="navbar-brand" href="/">AGS Tool</a>
+
+      <div>
+        <a v-if="$user.loggedIn" style="border: none !important;" href="/profile" class="btn btn-outline-secondary">
+          <i class="fa fa-user-circle"></i> {{$user.display}}
+        </a>
+        <a v-else href="/auth/sso" class="btn btn-outline-dark">
+          <i class="fa fa-user-circle"></i> Anmelden
+        </a>
+      </div>
     </nav>
 
-    <div>
+    <div class="content">
       <div v-if="$ui.loading">
         <div class="spinner">
           <div class="rect1"></div>
