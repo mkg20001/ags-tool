@@ -7,7 +7,7 @@ import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 
 import syncedData from './syncedData'
-
+import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '../css/main.css'
 const $ = window.jQuery = require('jquery')

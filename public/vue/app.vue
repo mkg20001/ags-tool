@@ -1,17 +1,8 @@
 <template>
   <div id="app" :class="$ui.dark ? 'ui ui-dark' : 'ui'">
-  <nav>
-    <div class="nav-right">
-      <div class="brand">AGS Tools</div>
-    </div>
-    <div class="nav-left">
-      <ul>
-        <li><a href="#">About</a></li>
-        <li><a href="#" class="btn btn-main">Login</a></li>
-        <li><a href="#" class="btn btn-main-inv">Register</a></li>
-      </ul>
-    </div>
-  </nav>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">AGS Tool</a>
+    </nav>
 
     <div>
       <div v-if="$ui.loading">

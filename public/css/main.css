@@ -18,37 +18,6 @@ nav {
   box-shadow: 2px 0 6px 4px grey;
 }
 
-nav > div > ul {
-  display: flex;
-}
-
-nav > div > ul, nav > div > ul > li > a {
-  color: #8f8f8f90;
-  font-weight: 600;
-  list-style: none;
-  margin: 1em;
-  margin-right: .5em;
-  text-decoration: none;
-  font-size: 1.1em;
-  transition: .5s;
-}
-
-nav > div > ul > li > a:hover {
-  color: #8f8f8f;
-}
-
-.nav-right {
-  position: relative;
-  bottom: -6px;
-  display: inline;
-  height: 0;
-  font-size: 2.2em;
-  font-weight: 600;
-}
-
-.nav-left {
-}
-
 /* Elements */
 
 .main-page-btn > * {
