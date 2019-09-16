@@ -22,5 +22,12 @@
     "email": "E-Mail",
     "password": "Passwort",
     "error": "Fehler beim Anmelden!"
+  },
+  "pad": {
+    "title": "Pad"
+  },
+  "padadmin": {
+    "title": "Pad-Verwaltung",
+    "desc": "Hier können erstellte Pads verwaltet und zu Sitzungsprotokollen archiviert werden"
   }
 }
