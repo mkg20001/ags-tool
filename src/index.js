@@ -5,9 +5,7 @@ const Sequelize = require('sequelize')
 const Joi = require('@hapi/joi')
 
 const pino = require('pino')
-const log = pino({name: 'da-pad'})
-
-const mongoose = require('mongoose')
+const log = pino({name: 'ags-tool'})
 
 const Relish = require('relish')({
   messages: {}
@@ -24,7 +22,7 @@ const init = async (config) => {
 
   await server.register({
     plugin: require('hapi-pino'),
-    options: {name: 'da-pad'}
+    options: {name: 'ags-tool'}
   })
 
   if (global.SENTRY) {
@@ -42,6 +40,10 @@ const init = async (config) => {
     plugin: require('@hapi/nes')
   })
 
+  await server.register({
+    plugin: require('@hapi/bell')
+  })
+
   const sequelize = new Sequelize(config.db)
 
   require('hapi-spa-serve')(server, {assets: require('path').join(__dirname, '../dist')})
@@ -50,7 +52,6 @@ const init = async (config) => {
 
   await sequelize.sync()
 
-  await mongoose.connect(config.mongodb)
   await server.start()
 }
 

@@ -9,7 +9,7 @@ module.exports = (init) => {
   const fs = require('fs')
   const path = require('path')
 
-  const confPath = [path.join(process.cwd(), 'config.yaml'), '/etc/da-pad.yaml'].filter(p => fs.existsSync(p))[0]
+  const confPath = [path.join(process.cwd(), 'config.yaml'), process.env.SNAP_COMMON ? path.join(process.env.SNAP_COMMON, 'ags-tool.yaml') : '/etc/ags-tool.yaml'].filter(p => fs.existsSync(p))[0]
 
   if (!confPath) {
     throw new Error('No config found!')

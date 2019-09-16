@@ -1,11 +1,16 @@
 'use strict'
 
-module.exports = async (server, config) => {
+module.exports = async (server, sequelize, config) => {
+  server.auth.strategy('sso', 'bell', config.sso)
+
   server.route({
-    method: 'POST',
-    path: '/api/v0/login',
-    handler: function (request, h) {
-      return 'Hello World!'
+    method: 'GET',
+    path: '/auth/sso',
+    options: {
+      auth: 'sso',
+      handler: function (request, h) {
+        return 'Hello World!'
+      }
     }
   })
 }
