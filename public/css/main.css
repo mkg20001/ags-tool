@@ -9,6 +9,10 @@ body {
   margin: 16px;
 }
 
+.lower-layer {
+  margin-left: 24px;
+}
+
 /* Nav */
 
 nav {
