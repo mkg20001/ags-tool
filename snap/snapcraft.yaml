@@ -21,6 +21,6 @@ parts:
     nodejs-package-manager: yarn
     source: .
     override-build: |
-      yarn
-      yarn run build
+      npm
+      npm run build
       snapcraftctl build
