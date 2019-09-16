@@ -1,29 +1,18 @@
 'use strict'
 
-const Sequelize = require('sequelize')
-
+const Auth = require('./auth')
 module.exports = async (server, sequelize, config) => {
-  class User extends Sequelize.Model {}
-  User.init({
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-
-    username: Sequelize.STRING,
-    email: Sequelize.STRING
-  }, { sequelize, modelName: 'user' })
-
   server.auth.strategy('sso', 'bell', config.sso)
+  await Auth(server, sequelize)
+  server.auth.strategy('session', 'simplesession', {isDev: config.sso.isSecure === false})
 
   server.route({
     method: 'GET',
-    path: '/auth/sso',
+    path: '/api/v0/user/profile',
     options: {
-      auth: 'sso',
-      handler: function (request, h) {
-        return 'Hello World!'
+      auth: 'session',
+      handler: async (request, h) => {
+        return request.auth
       }
     }
   })

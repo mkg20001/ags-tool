@@ -44,6 +44,10 @@ const init = async (config) => {
     plugin: require('@hapi/bell')
   })
 
+  await server.register({
+    plugin: require('@hapi/cookie')
+  })
+
   const sequelize = new Sequelize(config.db)
 
   require('hapi-spa-serve')(server, {assets: require('path').join(__dirname, '../dist')})
