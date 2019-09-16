@@ -12,6 +12,7 @@ apps:
   ags-tool:
     command: ags-tool
     plugs: [network, network-bind]
+    daemon: simple
 
 parts:
   ags-tool:
