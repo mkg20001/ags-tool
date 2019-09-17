@@ -1,3 +1,6 @@
+import * as b from 'babel-core/register'
+import * as b2 from 'babel-polyfill'
+
 import Vue from 'vue/dist/vue.esm.js'
 
 import * as Sentry from '@sentry/browser'
