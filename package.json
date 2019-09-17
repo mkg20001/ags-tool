@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A tool for the Pirate Parties' AG Geiler Scheiss group",
   "main": "index.js",
+  "bin": {
+    "ags-tool": "./bin.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel public/index.html",
@@ -29,7 +32,7 @@
     "@sentry/browser": "^5.6.3",
     "@vue/component-compiler-utils": "^3.0.0",
     "bootstrap": "^4.3.1",
-    "da-pad": "^0.0.4",
+    "da-pad": "^0.0.5",
     "hapi-pino": "^6.1.0",
     "hapi-sentry": "^2.0.3",
     "hapi-spa-serve": "^0.1.1",
@@ -39,7 +42,6 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "popper.js": "^1.15.0",
-    "relish": "https://github.com/mkg20001/relish/releases/download/v3.0.0/relish-3.0.0.tgz",
     "sequelize": "^5.18.4",
     "sweetalert2": "^8.17.3",
     "vue": "^2.6.10",
