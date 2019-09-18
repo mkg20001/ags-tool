@@ -62,15 +62,12 @@ module.exports = async (server, sequelize, config) => {
       primaryKey: true
     },
 
-    ssoId: Sequelize.INTEGER,
-    username: Sequelize.STRING,
-    displayname: Sequelize.STRING,
-    config: Sequelize.JSONB,
-    scope: {
-      type: Sequelize.JSONB,
-      default: []
-    },
-    email: Sequelize.STRING
+    title: Sequelize.STRING,
+    desc: Sequelize.STRING(Math.pow(2, 14)),
+    stateOpen: Sequelize.BOOLEAN,
+    stateTag: Sequelize.STRING(50),
+
+    acl: Sequelize.JSONB // {id<user>, canAddUsers, canRemoveUsers, canEdit}
   }, { sequelize, modelName: 'task' })
 
   await CRUD({
