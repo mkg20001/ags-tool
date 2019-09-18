@@ -7,9 +7,10 @@ function generateConfig (auth, model, valPayload, valId) {
   const out = { validate: {} }
 
   if (valId) {
-    out.validate.params = {
-      id: Joi.integer().required()
-    }
+    // TODO: check if this works
+    out.validate.params = Joi.object({
+      id: Joi.number().integer().required()
+    })
   }
 
   if (valPayload) {
@@ -21,7 +22,17 @@ function generateConfig (auth, model, valPayload, valId) {
     scope = scope ? scope.split(',') : null
     mode = mode || null // nullify empty string
 
-    out.auth = {strategy, scope, mode}
+    const _auth = {strategy, scope, mode}
+
+    for (const key in _auth) {
+      if (_auth[key] != null) {
+        if (!out.auth) {
+          out.auth = {}
+        }
+
+        out.auth[key] = _auth[key]
+      }
+    }
   }
 
   return out
@@ -36,11 +47,33 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
 
   const base = `${prefix}/${name}`
 
-  async function m (name, parsed, request, h) {
+  async function m (stage, type, request, h, result) {
+    let parsed = { op: stage, performer: request.auth }
+
+    switch (type) {
+      case 'pre': {
+        parsed.target = request.params.id || 'any'
+        parsed.data = request.payload
+        break
+      }
+      case 'post': {
+        parsed.target = request.params.id || 'any'
+        parsed.data = request.payload
+
+        // TODO: h.takeover() support
+
+        parsed.result = result
+        break
+      }
+      default: {
+        throw new TypeError(stage)
+      }
+    }
+
     if (middleware[name]) {
       const a = Array.isArray(middleware[name]) ? middleware[name] : [middleware[name]]
       for (let i = 0; i < a.length; i++) {
-        await a[i](request, h)
+        await a[i](parsed, request, h)
       }
     }
   }
@@ -71,24 +104,16 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'GET',
     path: base,
     // TODO: where, payload validate, param validate, limit, id-based pagination
-    config: generateConfig(auth.create, model, false, false),
+    config: generateConfig(auth.read, model, false, false),
     handler: async (request, h) => {
-      await m('preRead', { op: 'read', performer: request.auth, target: 'any' }, request, h)
+      await m('pre', 'read', request, h)
 
       try {
         const res = await model.findAll({
-          /* include: [
-        {
-          model: models.Comment,
-          as: 'comments'
-        },
-        {
-          model: models.User,
-          as: 'author'
-        }
-      ] */
+          // TODO: add include
+          // TODO: where filter, limit, id-based pagination
         })
-        await m('postRead', { op: 'read', performer: request.auth, target: 'any', res }, request, h)
+        await m('post', 'read', request, h, res)
         return h.response(res).status(200)
       } catch (error) {
         throw Boom.badImplementation(error.message)
@@ -100,32 +125,17 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'GET',
     path: `${base}/{id}`,
     // TODO: params validate
-    config: generateConfig(auth.create, model, false, true),
+    config: generateConfig(auth.read, model, false, true),
     handler: async (request, h) => {
-      await m('preReadSingle', { op: 'read', performer: request.auth, target: request.params.id }, request, h)
+      await m('pre', 'read', request, h)
 
       try {
         const { id } = request.params
         const res = await model.findOne({
           where: { id }
-          /* include: [
-            {
-              model: models.Comment,
-              as: 'comments',
-              include: [
-                {
-                  model: models.User,
-                  as: 'author'
-                }
-              ]
-            },
-            {
-              model: models.User,
-              as: 'author'
-            }
-          ] */
+          // TODO: add include
         })
-        await m('postReadSingle', { op: 'read', performer: request.auth, target: request.params.id, res }, request, h)
+        await m('post', 'read', request, h, res)
 
         if (res) {
           return h.response(res).status(200)
@@ -144,15 +154,17 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'POST',
     path: `${base}/{id}`,
     // TODO:  payload validate, params validate
-    config: generateConfig(auth.create, model, true, true),
+    config: generateConfig(auth.update, model, true, true),
     handler: async (request, h) => {
-      await m('preUpdate', { op: 'update', performer: request.auth, data: request.payload, target: request.params.id }, request, h)
+      await m('pre', 'update', request, h)
 
       try {
         const { id } = request.params
         const [ updated ] = await model.update(request.payload, {
           where: { id }
         })
+
+        await m('post', 'update', request, h, updated)
 
         if (updated) {
           const res = await model.findOne({ where: { id } })
@@ -172,15 +184,17 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'DELETE',
     path: `${base}/{id}`,
     // TODO:  params validate
-    config: generateConfig(auth.create, model, false, true),
+    config: generateConfig(auth.delete, model, false, true),
     handler: async (request, h) => {
-      await m('preDelete', { op: 'delete', performer: request.auth, target: request.params.id }, request, h)
+      await m('pre', 'delete', request, h)
 
       try {
         const { id } = request.params
         const deleted = await model.destroy({
           where: { id }
         })
+
+        await m('post', 'delete', request, h, deleted)
 
         if (deleted) {
           return h.response({ok: true}).status(204)
