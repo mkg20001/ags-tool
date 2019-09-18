@@ -5,6 +5,9 @@ summary: A tool for the AG Geiler Scheiss
 description: |
   https://github.com/mkg20001/ags-tool WIP
 
+architectures:
+  - build-on: amd64
+
 grade: stable
 confinement: strict
 

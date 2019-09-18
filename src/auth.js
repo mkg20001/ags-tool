@@ -58,7 +58,10 @@ module.exports = async function (server, sequelize, options) {
     ssoId: Sequelize.INTEGER,
     username: Sequelize.STRING,
     displayname: Sequelize.STRING,
-    config: Sequelize.JSONB,
+    config: {
+      type: Sequelize.JSONB,
+      default: {}
+    },
     scope: {
       type: Sequelize.JSONB,
       default: []

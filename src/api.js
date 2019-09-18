@@ -16,14 +16,19 @@ module.exports = async (server, sequelize, config) => {
     options: {
       auth: 'session',
       handler: async (request, h) => {
-        const {config, id, email, displayname: display} = request.auth.credentials
+        const {config, id, email, displayname: display, scope} = request.auth.credentials
 
         return {
           loggedIn: true,
           config,
           id,
           email,
-          display
+          display,
+          permissions: scope,
+          p: scope.reduce((obj, perm) => {
+            obj[perm] = true
+            return obj
+          }, {})
         }
       }
     }
@@ -54,6 +59,8 @@ module.exports = async (server, sequelize, config) => {
     }
   })
 
+  /* Tasks */
+
   class Task extends Sequelize.Model {}
   Task.init({
     id: {
@@ -82,4 +89,9 @@ module.exports = async (server, sequelize, config) => {
       delete: 'session:admin'
     }
   })
+
+  /* pads */
+
+  // SELECT DISTINCT "deltas"."padId" FROM deltas
+  // to list all pads
 }
