@@ -1,13 +1,49 @@
 'use strict'
 
 const Boom = require('@hapi/boom')
+const Joi = require('@hapi/joi')
 
-function generateConfig (auth, model) {
+function generateConfig (auth, model, valPayload, valId) {
+  const out = { validate: {} }
 
+  if (valId) {
+    out.validate.params = {
+      id: Joi.integer().required()
+    }
+  }
+
+  if (valPayload) {
+    // TODO: fix joi-sequelize and use that for payload validate
+  }
+
+  if (auth) {
+    let {strategy, scope, mode} = auth.split(':')
+    scope = scope ? scope.split(',') : null
+    mode = mode || null // nullify empty string
+
+    out.auth = {strategy, scope, mode}
+  }
+
+  return out
 }
 
-module.exports = ({server, model, name, prefix, auth}) => {
+module.exports = ({server, model, name, prefix, auth, middleware}) => {
+  // TODO: use joi
+  if (!middleware) { middleware = {} }
+  if (!auth) { auth = {} }
+
+  if (!prefix) { prefix = '' }
+
   const base = `${prefix}/${name}`
+
+  async function m (name, request, h) {
+    if (middleware[name]) {
+      const a = Array.isArray(middleware[name]) ? middleware[name] : [middleware[name]]
+      for (let i = 0; i < a.length; i++) {
+        await a[i](request, h)
+      }
+    }
+  }
 
   // C is for Create
 
@@ -15,7 +51,10 @@ module.exports = ({server, model, name, prefix, auth}) => {
     method: 'POST',
     path: base,
     // TODO:  payload validate
+    config: generateConfig(auth.create, model, true, false),
     handler: async (request, h) => {
+      await m('preCreate', request, h)
+
       try {
         const res = await model.create(request.payload)
         return h.response(res).status()
@@ -32,7 +71,10 @@ module.exports = ({server, model, name, prefix, auth}) => {
     method: 'GET',
     path: base,
     // TODO: where, payload validate, param validate, limit, id-based pagination
+    config: generateConfig(auth.create, model, false, false),
     handler: async (request, h) => {
+      await m('preRead', request, h)
+
       try {
         const posts = await model.findAll({
           /* include: [
@@ -57,7 +99,10 @@ module.exports = ({server, model, name, prefix, auth}) => {
     method: 'GET',
     path: `${base}/{id}`,
     // TODO: params validate
+    config: generateConfig(auth.create, model, false, true),
     handler: async (request, h) => {
+      await m('preReadSingle', request, h)
+
       try {
         const { id } = request.params
         const res = await model.findOne({
@@ -96,7 +141,10 @@ module.exports = ({server, model, name, prefix, auth}) => {
     method: 'POST',
     path: `${base}/{id}`,
     // TODO:  payload validate, params validate
+    config: generateConfig(auth.create, model, true, true),
     handler: async (request, h) => {
+      await m('preUpdate', request, h)
+
       try {
         const { id } = request.params
         const [ updated ] = await model.update(request.payload, {
@@ -121,7 +169,10 @@ module.exports = ({server, model, name, prefix, auth}) => {
     method: 'DELETE',
     path: `${base}/{id}`,
     // TODO:  params validate
+    config: generateConfig(auth.create, model, false, true),
     handler: async (request, h) => {
+      await m('preDelete', request, h)
+
       try {
         const { id } = request.params
         const deleted = await model.destroy({
