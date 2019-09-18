@@ -36,7 +36,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
 
   const base = `${prefix}/${name}`
 
-  async function m (name, request, h) {
+  async function m (name, parsed, request, h) {
     if (middleware[name]) {
       const a = Array.isArray(middleware[name]) ? middleware[name] : [middleware[name]]
       for (let i = 0; i < a.length; i++) {
@@ -53,7 +53,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     // TODO:  payload validate
     config: generateConfig(auth.create, model, true, false),
     handler: async (request, h) => {
-      await m('preCreate', request, h)
+      await m('preCreate', { op: 'create', performer: request.auth, data: request.payload }, request, h)
 
       try {
         const res = await model.create(request.payload)
@@ -73,10 +73,10 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     // TODO: where, payload validate, param validate, limit, id-based pagination
     config: generateConfig(auth.create, model, false, false),
     handler: async (request, h) => {
-      await m('preRead', request, h)
+      await m('preRead', { op: 'read', performer: request.auth, target: 'any' }, request, h)
 
       try {
-        const posts = await model.findAll({
+        const res = await model.findAll({
           /* include: [
         {
           model: models.Comment,
@@ -88,7 +88,8 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
         }
       ] */
         })
-        return h.response(posts).status(200)
+        await m('postRead', { op: 'read', performer: request.auth, target: 'any', res }, request, h)
+        return h.response(res).status(200)
       } catch (error) {
         throw Boom.badImplementation(error.message)
       }
@@ -101,7 +102,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     // TODO: params validate
     config: generateConfig(auth.create, model, false, true),
     handler: async (request, h) => {
-      await m('preReadSingle', request, h)
+      await m('preReadSingle', { op: 'read', performer: request.auth, target: request.params.id }, request, h)
 
       try {
         const { id } = request.params
@@ -124,6 +125,8 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
             }
           ] */
         })
+        await m('postReadSingle', { op: 'read', performer: request.auth, target: request.params.id, res }, request, h)
+
         if (res) {
           return h.response(res).status(200)
         } else {
@@ -143,7 +146,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     // TODO:  payload validate, params validate
     config: generateConfig(auth.create, model, true, true),
     handler: async (request, h) => {
-      await m('preUpdate', request, h)
+      await m('preUpdate', { op: 'update', performer: request.auth, data: request.payload, target: request.params.id }, request, h)
 
       try {
         const { id } = request.params
@@ -171,13 +174,14 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     // TODO:  params validate
     config: generateConfig(auth.create, model, false, true),
     handler: async (request, h) => {
-      await m('preDelete', request, h)
+      await m('preDelete', { op: 'delete', performer: request.auth, target: request.params.id }, request, h)
 
       try {
         const { id } = request.params
         const deleted = await model.destroy({
           where: { id }
         })
+
         if (deleted) {
           return h.response({ok: true}).status(204)
         } else {
