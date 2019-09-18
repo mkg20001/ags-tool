@@ -47,7 +47,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
 
   const base = `${prefix}/${name}`
 
-  async function m (stage, type, request, h, result) {
+  async function m (type, stage, request, h, result) {
     let parsed = { op: stage, performer: request.auth }
 
     switch (type) {
@@ -66,7 +66,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
         break
       }
       default: {
-        throw new TypeError(stage)
+        throw new TypeError(type)
       }
     }
 
@@ -90,7 +90,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
 
       try {
         const res = await model.create(request.payload)
-        return h.response(res).status()
+        return h.response(res).code()
       } catch (error) {
         // TODO: better errorss
         throw Boom.badImplementation(error.message)
@@ -114,7 +114,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
           // TODO: where filter, limit, id-based pagination
         })
         await m('post', 'read', request, h, res)
-        return h.response(res).status(200)
+        return h.response(res).code(200)
       } catch (error) {
         throw Boom.badImplementation(error.message)
       }
@@ -138,7 +138,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
         await m('post', 'read', request, h, res)
 
         if (res) {
-          return h.response(res).status(200)
+          return h.response(res).code(200)
         } else {
           throw Boom.notFound(`${name} with ID ${id} does not exist!`)
         }
@@ -168,7 +168,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
 
         if (updated) {
           const res = await model.findOne({ where: { id } })
-          return h.response(res).status(200)
+          return h.response(res).code(200)
         } else {
           throw Boom.notFound(`${name} with ID ${id} does not exist!`)
         }
@@ -197,9 +197,9 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
         await m('post', 'delete', request, h, deleted)
 
         if (deleted) {
-          return h.response({ok: true}).status(204)
+          return h.response({ok: true}).code(204)
         } else {
-          return h.response({ok: true, soft404: true}).status(204)
+          return h.response({ok: true, soft404: true}).code(204)
         }
       } catch (error) {
         throw Boom.badImplementation(error.message)

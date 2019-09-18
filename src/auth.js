@@ -109,4 +109,6 @@ module.exports = async function (server, sequelize, options) {
       }
     }
   })
+
+  return {User}
 }

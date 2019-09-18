@@ -7,7 +7,7 @@ const Sequelize = require('sequelize')
 
 module.exports = async (server, sequelize, config) => {
   server.auth.strategy('sso', 'bell', config.sso)
-  await Auth(server, sequelize)
+  const {User} = await Auth(server, sequelize)
   server.auth.strategy('session', 'simplesession', {isDev: config.sso.isSecure === false})
 
   server.route({
@@ -25,6 +25,31 @@ module.exports = async (server, sequelize, config) => {
           email,
           display
         }
+      }
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/api/v0/user/profile',
+    options: {
+      auth: 'session',
+      handler: async (request, h) => {
+        const {id} = request.auth.credentials
+
+        const {display, config, email} = request.payload
+
+        const up = {displayname: display, config, email}
+
+        for (const key in up) {
+          if (up[key] == null) {
+            delete up[key]
+          }
+        }
+
+        await User.update(up, { where: { id } })
+
+        return {ok: true}
       }
     }
   })
