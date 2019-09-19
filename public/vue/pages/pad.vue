@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
 #dapad {
-  min-height: 100vh;
+  min-height: 90vh;
   overflow-y: scroll;
 }
 </style>
