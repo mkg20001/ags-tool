@@ -4,6 +4,9 @@
       <a class="navbar-brand" href="/">AGS Tool</a>
 
       <div>
+        <a style="border: none !important;" href="https://github.com/mkg20001/ags-tool" class="btn btn-outline-dark">
+          <i class="fa fa-bug"></i>
+        </a>
         <a v-if="$user.loggedIn" style="border: none !important;" href="/profile" class="btn btn-outline-secondary">
           <i class="fa fa-user-circle"></i> {{$user.display}}
         </a>
