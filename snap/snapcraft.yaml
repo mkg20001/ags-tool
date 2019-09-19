@@ -21,7 +21,9 @@ parts:
   ags-tool:
     plugin: nodejs
     nodejs-version: 10.16.3
-    nodejs-package-manager: npm
+    override-install: |
+      npm prune
+      snapcraftctl install
     source: .
     build-packages:
       - git
