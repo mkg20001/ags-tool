@@ -64,5 +64,10 @@
     ],
     "delay": "2500",
     "exec": "node bin.js | pino-pretty"
-  }
+  },
+  "files": [
+    "dist/**/*",
+    "bin.js",
+    "src/**/*.js"
+  ]
 }
