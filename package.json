@@ -69,5 +69,16 @@
     "dist/**/*",
     "bin.js",
     "src/**/*.js"
-  ]
+  ],
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkg20001/ags-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mkg20001/ags-tool/issues"
+  },
+  "homepage": "https://github.com/mkg20001/ags-tool#readme"
 }
