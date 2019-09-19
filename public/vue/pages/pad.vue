@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>{{ $t('pad.title') }}</h1>
     <div id="dapad"></div>
   </div>
 </template>

@@ -28,7 +28,13 @@ URL=$(cat /tmp/proto | grep "/auth" | grep -o "/auth[a-z0-9/?=&A-Z-]*")
 
 "${CURL_BASE[@]}" -v "$SERVER_BASE$URL"
 
-while true; do
-  read -p ">" "params"
-  "${CURL_BASE[@]}" -v "$SERVER_BASE"$params
-done
+if [ -z "$1" ]; then
+  while true; do
+    read -p ">" "params"
+    "${CURL_BASE[@]}" -v "$SERVER_BASE"$params
+  done
+else
+  "${CURL_BASE[@]}" "$@"
+fi
+
+kill "$p"
