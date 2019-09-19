@@ -24,6 +24,8 @@
         </tr>
       </template>
     </pagination>
+
+    <div v-if="$user.loggedIn" class="btn btn-danger btn-fab"><i class="fas fa-plus"></i></div>
   </div>
 </template>
 
