@@ -9,11 +9,11 @@ const hat = require('hat')
 module.exports = async function (server, sequelize, options) {
   // Session auth
 
-  const cache = server.cache({segment: 'sessions', expiresIn: 60 * 60 * 1000})
+  const cache = server.cache({segment: 'sessions', expiresIn: 30 * 24 * 60 * 60 * 1000})
 
   const authScheme = (server, {isDev}) => {
     server.state('sid', {
-      ttl: 60 * 60 * 1000,
+      ttl: 30 * 24 * 60 * 60 * 1000,
       isSecure: !isDev,
       isHttpOnly: isDev,
       encoding: 'base64json',

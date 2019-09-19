@@ -2,6 +2,7 @@
 
 const Hapi = require('@hapi/hapi')
 const Sequelize = require('sequelize')
+const CatboxSequelize = require('catbox-sequelize')
 const Joi = require('@hapi/joi')
 
 const pino = require('pino')
@@ -12,11 +13,25 @@ const log = pino({name: 'ags-tool'})
 }) */
 
 const init = async (config) => {
+  const sequelize = new Sequelize(config.db)
+
   /* config.hapi.routes = {
     validate: {
       failAction: Relish.failAction
     }
   } */
+
+  config.hapi.cache = [
+    {
+      name: 'cache',
+      provider: {
+        constructor: CatboxSequelize,
+        options: {
+          sequelize
+        }
+      }
+    }
+  ]
 
   const server = Hapi.server(config.hapi)
 
@@ -43,8 +58,6 @@ const init = async (config) => {
   await server.register({
     plugin: require('@hapi/bell')
   })
-
-  const sequelize = new Sequelize(config.db)
 
   require('hapi-spa-serve')(server, {assets: require('path').join(__dirname, '../dist')})
 
