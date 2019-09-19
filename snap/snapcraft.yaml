@@ -21,6 +21,7 @@ parts:
   ags-tool:
     plugin: nodejs
     nodejs-version: 10.16.3
+    nodejs-package-manager: npm
     source: .
     build-packages:
       - git
