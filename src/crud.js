@@ -233,3 +233,5 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     }
   })
 }
+
+module.exports.generateConfig = generateConfig

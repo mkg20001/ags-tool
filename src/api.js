@@ -90,8 +90,36 @@ module.exports = async (server, sequelize, config) => {
     }
   })
 
+  /* Protokolle */
+
+  class Protokoll extends Sequelize.Model {}
+  Protokoll.init({
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+
+    title: Sequelize.STRING,
+
+    textContent: Sequelize.STRING(Math.pow(2, 14)),
+    audioContent: Sequelize.STRING // local file id
+  }, { sequelize, modelName: 'protokolle' })
+
+  await CRUD({
+    server,
+    model: Protokoll,
+    name: 'protokolle',
+    prefix: '/api/v0',
+    auth: {
+      create: 'session:admin',
+      // read
+      update: 'session:admin',
+      delete: 'session:admin'
+    }
+  })
+
   /* pads */
 
-  // SELECT DISTINCT "deltas"."padId" FROM deltas
-  // to list all pads
+  await require('./pads')(server, sequelize, config)
 }

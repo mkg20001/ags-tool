@@ -48,14 +48,14 @@ We have $id:
       doFetch: async function (...a) {
         this.$emit('startLoading')
 
-        const res = await this.$api.json(`${this.resource}?` + String(new URLSearchParams(this.getParams(...a))))
+        const res = await window.fetch(`/api/v0/${this.resource}?` + String(new URLSearchParams(this.getParams(...a))))
         const data = await res.json()
 
-        const totalCount = parseInt(res.header.get('x-total-count'), 10)
-        const curPage = parseInt(res.header.get('x-current-page'), 10)
-        const perPage = parseInt(res.header.get('x-per-page'), 10)
-        const hasNext = JSON.parse(res.header.get('x-has-next'))
-        const hasPrev = JSON.parse(res.header.get('x-has-prev'))
+        const totalCount = parseInt(res.headers.get('x-total-count'), 10)
+        const curPage = parseInt(res.headers.get('x-current-page'), 10)
+        const perPage = parseInt(res.headers.get('x-per-page'), 10)
+        const hasNext = JSON.parse(res.headers.get('x-has-next'))
+        const hasPrev = JSON.parse(res.headers.get('x-has-prev'))
 
         this.data = data
         this.page = {

@@ -2,3 +2,15 @@ hapi:
   host: '::'
   port: 6778
 db: 'postgres://user:pass@example.com:5432/dbname'
+sso:
+  provider: 'provider' # see hapi bell providers
+  password: 'YOURSECRET'
+  clientId: 'YOURSECRET'
+  clientSecret: 'YOURSECRET'
+  isSecure: false # true if prod
+cookie:
+  name: ags.sid
+  password: COOKIESECRET
+  isSecure: false # true if prod
+templates: './templates'
+storage: './storage'

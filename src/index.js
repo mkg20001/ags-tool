@@ -50,15 +50,6 @@ const init = async (config) => {
 
   await require('./api')(server, sequelize, config)
 
-  const daPad = await require('da-pad/src/api')(server, sequelize, {
-    canViewPad: async () => {
-      return false
-    },
-    canEditPad: async () => {
-      return false
-    }
-  }) // returns {create(id, initialContent), delete(id)}
-
   await sequelize.sync()
 
   await server.start()
