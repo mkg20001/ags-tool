@@ -51,6 +51,7 @@ const router = new VueRouter({
     {path: '/', component: require('./pages/home.vue').default},
     {path: '/settings', component: require('./pages/settings.vue').default},
     {path: '/protokolle', component: require('./pages/protokolle.vue').default},
+    {path: '/tasks', component: require('./pages/tasks.vue').default},
     {path: '/admin/pad', component: require('./pages/pad-admin.vue').default},
     {path: '/pad/:id', component: require('./pages/pad.vue').default},
     {path: '*', component: require('./pages/404.vue').default}

@@ -16,12 +16,12 @@
         <th style="width: 8px;" scope="col"><i class="fas fa-trash"></i></th>
       </template>
 
-      <template v-slot:row>
-        <th scope="row">{{row.id}}</th>
-        <td>{{row.createdAt}}</td>
-        <td><a :href="'/pad/' + row.id"><i class="fas fa-link"></i></a></td>
-        <td><a href="#" onclick="archivePad(row.id)"><i class="fas fa-trash"></i></a></td>
-        <td><a href="#" onclick="deletePad(row.id)"><i class="fas fa-trash"></i></a></td>
+      <template slot="row" scope="t">
+        <th scope="row">{{t.row.id}}</th>
+        <td>{{t.row.createdAt}}</td>
+        <td><a :href="'/pad/' + t.row.id"><i class="fas fa-link"></i></a></td>
+        <td><a href="#" onclick="archivePad(t.row.id)"><i class="fas fa-trash"></i></a></td>
+        <td><a href="#" onclick="deletePad(t.row.id)"><i class="fas fa-trash"></i></a></td>
       </template>
     </pagination>
 

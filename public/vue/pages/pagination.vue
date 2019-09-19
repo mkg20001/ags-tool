@@ -8,11 +8,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in data">
-        <slot name="row">
-          <th scope="row">{{row.id}}</th>
-        </slot>
-      </tr>
+      <slot name="rowouter" :data="data">
+        <tr v-for="row in data">
+          <slot name="row" :row="row">
+            <th scope="row">{{row.id}}</th>
+          </slot>
+        </tr>
+      </slot>
     </tbody>
   </table>
 </template>

@@ -33,5 +33,9 @@
   "protokolle": {
     "title": "Protokolle",
     "desc": "Sitzungsprotokolle (Pad Notizen sowie Sprachaufzeichnungen) der letzten Sitzungen"
+  },
+  "tasks": {
+    "title": "Aufgaben",
+    "desc": "Hier können AG-Interne Aufgaben verwaltet und erstellt werden"
   }
 }
