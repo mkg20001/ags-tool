@@ -39,16 +39,16 @@ We have $id:
       tableClass: String
     },
     methods: {
-      getParams: (gotoPage, relPage, perPage) => {
+      getParams: function (gotoPage, relPage, perPage) {
         return {
           page: relPage ? (this.page.curPage + relPage) : gotoPage ? gotoPage : this.page.curPage,
           perPage: perPage || this.page.perPage
         }
       },
-      doFetch: async (...a) => {
+      doFetch: async function (...a) {
         this.$emit('startLoading')
 
-        const res = await this.$api.json(`/api/v0/${this.$data.resource}?` + String(new URLSearchParams(this.getParams(...a))))
+        const res = await this.$api.json(`${this.resource}?` + String(new URLSearchParams(this.getParams(...a))))
         const data = await res.json()
 
         const totalCount = parseInt(res.header.get('x-total-count'), 10)
@@ -73,7 +73,10 @@ We have $id:
     },
     data: () => ({
       data: [],
-      page: {}
+      page: {
+        curPage: 1,
+        perPage: 25
+      }
     }),
     mounted () {
       this.doFetch()
