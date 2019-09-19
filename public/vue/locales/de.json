@@ -8,6 +8,7 @@
   },
   "settings": {
     "title": "Einstellungen",
+    "desc": "Hier können die Einstellungen geändert werden",
     "lang": "Sprache",
     "dark": "Dunkler Modus",
     "dark_desc": "Dunklen Modus aktivieren",

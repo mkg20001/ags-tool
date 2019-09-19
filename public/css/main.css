@@ -9,6 +9,14 @@ body {
   margin: 16px;
 }
 
+.page-margin {
+  margin: .5em 2em;
+}
+
+.no-border {
+  border: none !important;
+}
+
 .lower-layer {
   margin-left: 24px;
 }

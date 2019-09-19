@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div v-else class="margin-16">
+      <div v-else class="page-margin">
         <router-view></router-view>
       </div>
     </div>
