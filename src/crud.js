@@ -25,7 +25,7 @@ function generateConfig (auth, model, valPayload, valId, valPage) {
   }
 
   if (auth) {
-    let {strategy, scope, mode} = auth.split(':')
+    let [strategy, scope, mode] = auth.split(':')
     scope = scope ? scope.split(',') : null
     mode = mode || null // nullify empty string
 
