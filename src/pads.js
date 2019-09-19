@@ -90,4 +90,21 @@ module.exports = async (server, sequelize, config) => {
       }
     }
   })
+
+  server.route({
+    method: 'DELETE',
+    path: '/api/v0/pads/{id}',
+    config: CRUD.generateConfig('session:admin', daPad.Delta, false, true, false),
+    handler: async (request, h) => {
+      try {
+        const { id: padId } = request.params
+
+        await daPad.delete(padId)
+
+        return h.response({ok: true}).code(204)
+      } catch (error) {
+        throw Boom.badImplementation(error.message)
+      }
+    }
+  })
 }
