@@ -12,6 +12,11 @@
             <i class="fas fa-list"></i>
           </button>
         </a>
+        <a v-else href="/pad">
+          <button type="button" class="btn btn-danger bmd-btn-fab">
+            <i class="far fa-sticky-note"></i>
+          </button>
+        </a>
         <a href="/tasks">
           <button type="button" class="btn btn-success bmd-btn-fab">
             <i class="fas fa-check-circle"></i>

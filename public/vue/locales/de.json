@@ -25,7 +25,8 @@
     "error": "Fehler beim Anmelden!"
   },
   "pad": {
-    "title": "Pad"
+    "title": "Pad",
+    "select": "Pad-Id"
   },
   "padadmin": {
     "title": "Pad-Verwaltung",
