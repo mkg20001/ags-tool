@@ -5,26 +5,23 @@
     <h5>{{ $t('protokolle.desc') }}</h5>
     <br>
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Titel</th>
-          <th scope="col">Erstellt am</th>
-          <th style="width: 8px;" scope="col"><i class="fas fa-link"></i></th>
-          <th v-if="$user.p.admin" style="width: 8px;" scope="col"><i class="fas fa-trash"></i></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="protokoll in protokolls">
-          <th scope="row">{{protokoll.id}}</th>
-          <td>{{protokoll.title}}</td>
-          <td>{{protokoll.createdAt}}</td>
-          <td><a :href="'/protokoll/' + protokoll.id"><i class="fas fa-link"></i></a></td>
-          <td><a v-if="$user.p.admin" href="#" onclick="deleteprotokoll(protokoll.id)"><i class="fas fa-trash"></i></a></td>
-        </tr>
-      </tbody>
-    </table>
+    <pagination resource="protokolle" tableClass="table table-hover">
+      <template v-slot:header>
+        <th scope="col">#</th>
+        <th scope="col">Titel</th>
+        <th scope="col">Erstellt am</th>
+        <th style="width: 8px;" scope="col"><i class="fas fa-link"></i></th>
+        <th v-if="$user.p.admin" style="width: 8px;" scope="col"><i class="fas fa-trash"></i></th>
+      </template>
+
+      <template v-slot:row>
+        <th scope="row">{{row.id}}</th>
+        <td>{{row.title}}</td>
+        <td>{{row.createdAt}}</td>
+        <td><a :href="'/protokoll/' + row.id"><i class="fas fa-link"></i></a></td>
+        <td><a v-if="$user.p.admin" href="#" onclick="deleteprotokoll(row.id)"><i class="fas fa-trash"></i></a></td>
+      </template>
+    </pagination>
   </div>
 </template>
 
@@ -32,10 +29,13 @@
 </style>
 
 <script>
+  import pagination from './pagination.vue'
+
   export default {
     name: 'protokolle',
-    data: () => ({
-      protokolls: []
-    }),
+    data: () => ({ }),
+    components: {
+      pagination
+    }
   }
 </script>

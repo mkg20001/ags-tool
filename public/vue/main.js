@@ -77,7 +77,10 @@ $(document).ready(async () => {
 
   if (!await api.areWeLoggedInYet()) {
     user = {
-      loggedIn: false
+      loggedIn: false,
+      config: {},
+      permissions: [],
+      p: {}
     }
   } else {
     user = await api.json('user/profile')

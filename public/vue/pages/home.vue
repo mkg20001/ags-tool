@@ -7,7 +7,7 @@
       <h1 style="font-size: 4em">{{ $t('home.welcome') }}</h1>
       <br>
       <span class="main-page-btn">
-        <a href="/admin/pad"> <!-- v-if="$user.permission.admin" -->
+        <a v-if="$user.p.admin" href="/admin/pad">
           <button type="button" class="btn btn-danger bmd-btn-fab">
             <i class="fas fa-list"></i>
           </button>

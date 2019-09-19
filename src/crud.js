@@ -3,7 +3,7 @@
 const Boom = require('@hapi/boom')
 const Joi = require('@hapi/joi')
 
-function generateConfig (auth, model, valPayload, valId) {
+function generateConfig (auth, model, valPayload, valId, valPage) {
   const out = { validate: {} }
 
   if (valId) {
@@ -15,6 +15,13 @@ function generateConfig (auth, model, valPayload, valId) {
 
   if (valPayload) {
     // TODO: fix joi-sequelize and use that for payload validate
+  }
+
+  if (valPage) {
+    out.validate.query = Joi.object({
+      page: Joi.number().integer().min(1).default(1),
+      perPage: Joi.number().integer().default(25).max(1024)
+    })
   }
 
   if (auth) {
@@ -84,7 +91,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'POST',
     path: base,
     // TODO:  payload validate
-    config: generateConfig(auth.create, model, true, false),
+    config: generateConfig(auth.create, model, true, false, false),
     handler: async (request, h) => {
       await m('preCreate', { op: 'create', performer: request.auth, data: request.payload }, request, h)
 
@@ -104,17 +111,36 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'GET',
     path: base,
     // TODO: where, payload validate, param validate, limit, id-based pagination
-    config: generateConfig(auth.read, model, false, false),
+    config: generateConfig(auth.read, model, false, false, true),
     handler: async (request, h) => {
       await m('pre', 'read', request, h)
 
+      // TODO: where filters
+      const {page, perPage} = request.query
+
       try {
-        const res = await model.findAll({
-          // TODO: add include
-          // TODO: where filter, limit, id-based pagination
+        // TODO: add include
+        // TODO: where filter, limit, id-based pagination
+
+        const offset = (page - 1) * perPage
+
+        const res = await model.findAndCountAll({
+          limit: perPage,
+          offset,
+          order: [
+            ['id', 'ASC']
+          ]
         })
+
         await m('post', 'read', request, h, res)
-        return h.response(res).code(200)
+
+        return h.response(res.rows)
+          .header('X-Total-Count', res.count)
+          .header('X-Current-Page', page)
+          .header('X-Per-Page', perPage)
+          .header('X-Has-Next', JSON.stringify(offset < res.count))
+          .header('X-Has-Prev', JSON.stringify(Boolean(offset)))
+          .code(200)
       } catch (error) {
         throw Boom.badImplementation(error.message)
       }
@@ -125,7 +151,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'GET',
     path: `${base}/{id}`,
     // TODO: params validate
-    config: generateConfig(auth.read, model, false, true),
+    config: generateConfig(auth.read, model, false, true, false),
     handler: async (request, h) => {
       await m('pre', 'read', request, h)
 
@@ -154,7 +180,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'POST',
     path: `${base}/{id}`,
     // TODO:  payload validate, params validate
-    config: generateConfig(auth.update, model, true, true),
+    config: generateConfig(auth.update, model, true, true, false),
     handler: async (request, h) => {
       await m('pre', 'update', request, h)
 
@@ -184,7 +210,7 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     method: 'DELETE',
     path: `${base}/{id}`,
     // TODO:  params validate
-    config: generateConfig(auth.delete, model, false, true),
+    config: generateConfig(auth.delete, model, false, true, false),
     handler: async (request, h) => {
       await m('pre', 'delete', request, h)
 
