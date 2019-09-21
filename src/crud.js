@@ -93,11 +93,11 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
     // TODO:  payload validate
     config: generateConfig(auth.create, model, true, false, false),
     handler: async (request, h) => {
-      await m('preCreate', { op: 'create', performer: request.auth, data: request.payload }, request, h)
+      await m('pre', 'create', request, h)
 
       try {
         const res = await model.create(request.payload)
-        return h.response(res).code()
+        return h.response(res).code(200)
       } catch (error) {
         // TODO: better errorss
         throw Boom.badImplementation(error.message)

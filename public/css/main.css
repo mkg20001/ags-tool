@@ -65,6 +65,25 @@ nav {
   font-size: 86px !important;
 }
 
+/* F */
+
+.f {
+  display: block;
+  margin: 1em;
+}
+
+.f-input, .f-textarea {
+  border-radius: 6px;
+  border: 1px #afafafaf solid;
+  padding: .3em;
+  max-width: 1024px;
+  width: 512px;
+}
+
+.f-label > * {
+  display: inline !important;
+}
+
 /* Spinner */
 
 .spinner {

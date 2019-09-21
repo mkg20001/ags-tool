@@ -115,6 +115,12 @@ We have $id:
           hasPrev
         }
       },
+      fetchSingle: async function (id) {
+        const res = await window.fetch(`/api/v0/${this.resource}/${id}`)
+        const data = await res.json()
+
+        this.item = data
+      },
       changePage: function (...a) {
         const newRoute = Object.assign({}, this.$route)
         newRoute.query = this.getPageParams(...a)
@@ -145,12 +151,21 @@ We have $id:
 
         switch (true) {
           case id === 'create': {
-            this.item = this.defaults || {}
-            this.view = 'single'
+            if (this.allowCreate) {
+              this.item = this.defaults || {}
+              this.view = 'single'
+            } else {
+              this.error = 'Create not allowed. Perhaps you need to sign-in?'
+            }
             break
           }
           case Boolean(id): {
-            this.getSingle(id)
+            try {
+              await this.getSingle(id)
+              this.view = 'single'
+            } catch (err) {
+              this.error = err.toString()
+            }
             break
           }
           case !id: {
@@ -184,9 +199,11 @@ We have $id:
 
           if (data.error) {
             return (this.error = data.error)
+          } else {
+            this.changeView()
           }
         } catch (err) {
-          this.error = this.err.toString()
+          return (this.error = this.err.toString())
         }
       }
     },
