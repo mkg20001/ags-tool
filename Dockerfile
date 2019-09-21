@@ -4,5 +4,5 @@ WORKDIR /app
 COPY . /app
 RUN npm i && npm run build && rm -rf node_modules && npm i --prod
 
-ENTRYPOINT ["/usr/local/bin/ags-tool"]
+ENTRYPOINT ["/app/bin.js"]
 CMD ["/config.yaml"]
