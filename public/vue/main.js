@@ -24,12 +24,12 @@ const api = require('./api').default({
 })
 window.swal = require('sweetalert2')
 
-if (!module.hot) {
+/* if (!module.hot) {
   Sentry.init({
     dsn: 'DSN',
     integrations: [new Sentry.Integrations.Vue({ Vue })]
   })
-}
+} */
 
 Vue.use(VueResource)
 Vue.use(GlobalOptions, ['api', 'config', 'user', 'ui'])
