@@ -10,7 +10,6 @@ import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 
 import syncedData from './syncedData'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '../css/main.css'
 const $ = window.jQuery = require('jquery')
@@ -23,6 +22,12 @@ const api = require('./api').default({
   versionPrefix: 'v0'
 })
 window.swal = require('sweetalert2')
+
+if (window.localStorage.getItem('useDark')) {
+  require('bootstrap/dist/css/bootstrap.min.css')
+} else {
+  require('@forevolve/bootstrap-dark/dist/css/bootstrap-dark.min.css')
+}
 
 /* if (!module.hot) {
   Sentry.init({
