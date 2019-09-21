@@ -10,8 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel public/index.html",
     "build": "rm -rf dist && parcel build public/index.html",
-    "prepublishOnly": "npm run build",
-    "postinstall": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "crdt",
@@ -23,6 +22,7 @@
   "dependencies": {
     "@babel/plugin-syntax-async-generators": "^7.2.0",
     "@babel/runtime": "^7.6.0",
+    "@forevolve/bootstrap-dark": "^1.0.0-alpha.774",
     "@fortawesome/fontawesome-free": "^5.11.1",
     "@hapi/bell": "^11.0.0",
     "@hapi/hapi": "^18.4.0",
@@ -35,6 +35,7 @@
     "bootstrap": "^4.3.1",
     "catbox-sequelize": "^0.0.2",
     "da-pad": "^0.0.9",
+    "darkmode-js": "^1.4.0",
     "hapi-pino": "^6.1.0",
     "hapi-sentry": "^2.0.3",
     "hapi-spa-serve": "^0.1.1",

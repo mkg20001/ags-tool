@@ -1,6 +1,6 @@
 {
   "home": {
-    "welcome": "PMail Mail Manager"
+    "welcome": "AGS Tool"
   },
   "404": {
     "title": "Not found",
@@ -22,5 +22,9 @@
     "email": "E-Mail",
     "password": "Password",
     "error": "Error while logging in!"
+  },
+  "pad": {
+    "title": "Pad",
+    "select": "Pad-Id"
   }
 }
