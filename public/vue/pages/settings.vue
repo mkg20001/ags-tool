@@ -16,12 +16,13 @@
 
     <br>
     <h2>{{ $t('settings.dark') }}</h2>
-    <div class="lower-layer">
+    <div v-if="!isLive" class="lower-layer">
       <label>
         <input type="checkbox" v-model="$ui.dark">
         {{ $t('settings.dark_desc') }}
       </label>
     </div>
+    <h4 v-else>TODO</h4>
   </div>
 </template>
 
@@ -32,7 +33,7 @@
   export default {
     name: 'settings',
     data () {
-      return { langs: Object.keys(require('../locales')).filter(k => k.length === 2) }
+      return { langs: Object.keys(require('../locales')).filter(k => k.length === 2), isLive: !module.hot }
     }
   }
 </script>
