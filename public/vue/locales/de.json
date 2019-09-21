@@ -38,6 +38,13 @@
   },
   "tasks": {
     "title": "Aufgaben",
+    "createTitle": "Aufgabe erstellen",
     "desc": "Hier können AG-Interne Aufgaben verwaltet und erstellt werden"
+  },
+  "profile": {
+    "title": "Profil",
+    "desc": "Hier kann das Nutzerprofil bearbeitet werden",
+    "name": "Angezeigter Name",
+    "email": "E-Mail"
   }
 }

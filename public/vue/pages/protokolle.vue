@@ -1,12 +1,14 @@
 <template>
   <div>
-    <br>
-    <h1>{{ $t('protokolle.title') }}</h1>
-    <h5>{{ $t('protokolle.desc') }}</h5>
-    <br>
+    <page resource="protokolle" tableClass="table table-hover">
+      <template v-slot:headerTable>
+        <br>
+        <h1>{{ $t('protokolle.title') }}</h1>
+        <h5>{{ $t('protokolle.desc') }}</h5>
+        <br>
+      </template>
 
-    <pagination resource="protokolle" tableClass="table table-hover">
-      <template v-slot:header>
+      <template v-slot:headerRow>
         <th scope="col">#</th>
         <th scope="col">Titel</th>
         <th scope="col">Erstellt am</th>
@@ -21,7 +23,7 @@
         <td><a :href="'/protokoll/' + t.row.id"><i class="fas fa-link"></i></a></td>
         <td><a v-if="$user.p.admin" href="#" onclick="deleteprotokoll(t.row.id)"><i class="fas fa-trash"></i></a></td>
       </template>
-    </pagination>
+    </page>
   </div>
 </template>
 
@@ -29,13 +31,13 @@
 </style>
 
 <script>
-  import pagination from './pagination.vue'
+  import page from './page.vue'
 
   export default {
     name: 'protokolle',
     data: () => ({ }),
     components: {
-      pagination
+      page
     }
   }
 </script>

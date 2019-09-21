@@ -1,12 +1,14 @@
 <template>
   <div>
-    <br>
-    <h1>{{ $t('tasks.title') }}</h1>
-    <h5>{{ $t('tasks.desc') }}</h5>
-    <br>
+    <page resource="tasks" tableClass="table table-hover" :allowCreate="$user.loggedIn">
+      <template v-slot:headerTable>
+        <br>
+        <h1>{{ $t('tasks.title') }}</h1>
+        <h5>{{ $t('tasks.desc') }}</h5>
+        <br>
+      </template>
 
-    <pagination resource="tasks" tableClass="table table-hover">
-      <template v-slot:header>
+      <template v-slot:headerRow>
         <th scope="col">#</th>
         <th scope="col">Titel</th>
         <th scope="col">Erstellt am</th>
@@ -14,7 +16,7 @@
         <th v-if="$user.p.admin" style="width: 8px;" scope="col"><i class="fas fa-trash"></i></th>
       </template>
 
-      <template slot="rowouter" scope="t">
+      <template slot="rowList" scope="t">
         <tr v-for="row in t.data">
           <th scope="row">{{row.id}}</th>
           <td>{{row.title}}</td>
@@ -23,9 +25,15 @@
           <td><a v-if="$user.p.admin" href="#" onclick="deleteprotokoll(row.id)"><i class="fas fa-trash"></i></a></td>
         </tr>
       </template>
-    </pagination>
 
-    <div v-if="$user.loggedIn" class="btn btn-danger btn-fab"><i class="fas fa-plus"></i></div>
+      <template slot="single" scope="t">
+        <br>
+        <h1 v-if="t.isCreate">{{ $t('tasks.createTitle') }}</h1>
+        <h1 v-else>{{ $t('tasks.single') }} {{item.name}}</h1>
+        <br>
+      </template>
+    </page>
+
   </div>
 </template>
 
@@ -33,13 +41,13 @@
 </style>
 
 <script>
-  import pagination from './pagination.vue'
+  import page from './page.vue'
 
   export default {
     name: 'tasks',
     data: () => ({ }),
     components: {
-      pagination
+      page
     }
   }
 </script>

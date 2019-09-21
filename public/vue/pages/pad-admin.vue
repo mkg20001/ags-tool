@@ -1,14 +1,16 @@
 <template>
   <div>
-    <br>
-    <h1>{{ $t('padadmin.title') }}</h1>
-    <h5>{{ $t('padadmin.desc') }}</h5>
-    <br>
-
     <!-- idea: multiple archive types for documents. basically like internal export. to convert to stuff like a project or sth -->
 
-    <pagination resource="pads" tableClass="table table-hover">
-      <template v-slot:header>
+    <page resource="pads" tableClass="table table-hover">
+      <template v-slot:headerTable>
+        <br>
+        <h1>{{ $t('padadmin.title') }}</h1>
+        <h5>{{ $t('padadmin.desc') }}</h5>
+        <br>
+      </template>
+
+      <template v-slot:headerRow>
         <th scope="col">#</th>
         <th scope="col">Erstellt am</th>
         <th style="width: 8px;" scope="col"><i class="fas fa-link"></i></th>
@@ -23,7 +25,7 @@
         <td><a href="#" onclick="archivePad(t.row.id)"><i class="fas fa-archive"></i></a></td>
         <td><a href="#" onclick="deletePad(t.row.id)"><i class="fas fa-trash"></i></a></td>
       </template>
-    </pagination>
+    </page>
 
     <div class="btn btn-danger btn-fab"><i class="fas fa-plus"></i></div>
   </div>
@@ -33,13 +35,13 @@
 </style>
 
 <script>
-  import pagination from './pagination.vue'
+  import page from './page.vue'
 
   export default {
     name: 'pad-admin',
     data: () => ({ }),
     components: {
-      pagination
+      page
     }
   }
 </script>
