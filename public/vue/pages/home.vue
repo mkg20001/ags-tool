@@ -7,12 +7,12 @@
       <h1 style="font-size: 4em">{{ $t('home.welcome') }}</h1>
       <br>
       <span class="main-page-btn">
-        <a v-if="$user.p.admin" href="/admin/pad">
+        <a v-if="$user.p.admin && !isLive" href="/admin/pad">
           <button type="button" class="btn btn-danger bmd-btn-fab">
             <i class="fas fa-list"></i>
           </button>
         </a>
-        <a v-else href="/pad">
+        <a v-else-if="!isLive" href="/pad">
           <button type="button" class="btn btn-danger bmd-btn-fab">
             <i class="far fa-sticky-note"></i>
           </button>
@@ -22,7 +22,7 @@
             <i class="fas fa-check-circle"></i>
           </button>
         </a>
-        <a href="/protokolle">
+        <a v-if="!isLive" href="/protokolle">
           <button type="button" class="btn btn-warning bmd-btn-fab" style="color: white">
             <i class="fas fa-archive"></i>
           </button>
@@ -43,6 +43,8 @@
 <script>
   export default {
     name: 'home',
-    data: () => ({}),
+    data: () => ({
+      isLive: !module.hot
+    }),
   }
 </script>
