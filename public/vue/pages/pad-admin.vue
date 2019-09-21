@@ -2,7 +2,7 @@
   <div>
     <!-- idea: multiple archive types for documents. basically like internal export. to convert to stuff like a project or sth -->
 
-    <page resource="pads" tableClass="table table-hover">
+    <page resource="pads" tableClass="table table-hover" :allowCreate="true">
       <template v-slot:headerTable>
         <br>
         <h1>{{ $t('padadmin.title') }}</h1>
@@ -26,8 +26,6 @@
         <td><a href="#" onclick="deletePad(t.row.id)"><i class="fas fa-trash"></i></a></td>
       </template>
     </page>
-
-    <div class="btn btn-danger btn-fab"><i class="fas fa-plus"></i></div>
   </div>
 </template>
 

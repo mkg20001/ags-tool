@@ -1,5 +1,15 @@
 <template>
   <div>
+    <slot name="error" :error="error">
+      <br v-if="error">
+      <div v-if="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{error}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="error = null">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </slot>
+
     <div v-if="view === 'table'">
       <slot name="headerTable">
         <h1>{{resource}}</h1>
@@ -29,11 +39,17 @@
       </slot>
     </div>
     <div v-else-if="view === 'single'">
-      <form>
-        <slot name="single" :isCreate="$route.params.id === 'create'" :item="item">
-          <h2>ERROR: {{resource}} single-view not implemented</h2>
-        </slot>
-      </form>
+      <slot name="singleOuter">
+        <form>
+          <slot name="single" :isCreate="$route.params.id === 'create'" :item="item">
+            <h2>ERROR: {{resource}} single-view not implemented</h2>
+          </slot>
+          <slot name="singleActions" :isCreate="$route.params.id === 'create'" :item="item">
+            <div v-if="$route.params.id === 'create'" @click="submit()" class="btn btn-info btn-fab"><i class="fas fa-check"></i></div>
+            <div v-else @click="submit()" class="btn btn-info btn-fab"><i class="fas fa-save"></i></div>
+          </slot>
+        </form>
+      </slot>
     </div>
     <div v-else-if="view === 'loading'">
       <br>
@@ -123,6 +139,8 @@ We have $id:
         this.$router.push(newRoute)
       },
       getViewFromRoute: async function () {
+        this.error = null
+
         const {id} = this.$route.params
 
         switch (true) {
@@ -141,11 +159,34 @@ We have $id:
             if (!this.$route.query.page) {
               this.changePage()
             } else {
-              await this.doFetch()
-              this.view = 'table'
+              try {
+                await this.doFetch()
+                this.view = 'table'
+              } catch (err) {
+                this.error = err.toString()
+              }
             }
             break
           }
+        }
+      },
+      submit: async function () {
+        try {
+          const res = await window.fetch(`/api/v0/${this.resource}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.item)
+          })
+          const data = await res.json()
+
+          if (data.error) {
+            return (this.error = data.error)
+          }
+        } catch (err) {
+          this.error = this.err.toString()
         }
       }
     },
@@ -156,7 +197,8 @@ We have $id:
         curPage: 1,
         perPage: 25
       },
-      view: 'loading'
+      view: 'loading',
+      error: null
     }),
     mounted () {
       this.getViewFromRoute()
