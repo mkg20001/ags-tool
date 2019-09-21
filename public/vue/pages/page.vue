@@ -160,8 +160,9 @@ We have $id:
             break
           }
           case Boolean(id): {
+            this.view = 'loading'
             try {
-              await this.getSingle(id)
+              await this.fetchSingle(id)
               this.view = 'single'
             } catch (err) {
               this.error = err.toString()
@@ -187,7 +188,7 @@ We have $id:
       },
       submit: async function () {
         try {
-          const res = await window.fetch(`/api/v0/${this.resource}`, {
+          const res = await window.fetch(`/api/v0/${this.resource}${this.$route.params.id === 'create' ? '' : '/' + this.$route.params.id}`, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -198,6 +199,7 @@ We have $id:
           const data = await res.json()
 
           if (data.error) {
+            this.view = 'single'
             return (this.error = data.error)
           } else {
             this.changeView()

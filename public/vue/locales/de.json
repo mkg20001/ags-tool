@@ -39,6 +39,7 @@
   "tasks": {
     "title": "Aufgaben",
     "createTitle": "Aufgabe erstellen",
+    "single": "Aufgabe",
     "desc": "Hier können AG-Interne Aufgaben verwaltet und erstellt werden"
   },
   "profile": {

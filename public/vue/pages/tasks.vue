@@ -9,7 +9,7 @@
       </template>
 
       <template v-slot:headerRow>
-        <th scope="col">#</th>
+        <th style="width: 8px;" scope="col">#</th>
         <th scope="col">Titel</th>
         <th scope="col">Erstellt am</th>
         <th style="width: 8px;" scope="col"><i class="fas fa-link"></i></th>
@@ -29,7 +29,7 @@
       <template slot="single" scope="t">
         <br>
         <h1 v-if="t.isCreate">{{ $t('tasks.createTitle') }}</h1>
-        <h1 v-else>{{ $t('tasks.single') }} {{item.title}}</h1>
+        <h1 v-else>{{ $t('tasks.single') }} {{t.item.title}}</h1>
         <br>
 
         <input class="f f-input" type="text" v-model="t.item.title" placeholder="Titel"></input>
