@@ -19,6 +19,8 @@ if (!window.fetch) {
   require('whatwg-fetch')
 }
 
+require('sweetalert2')
+
 const api = require('./api').default({
   versionPrefix: 'v0'
 })

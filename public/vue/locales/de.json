@@ -40,7 +40,10 @@
     "title": "Aufgaben",
     "createTitle": "Aufgabe erstellen",
     "single": "Aufgabe",
-    "desc": "Hier können AG-Interne Aufgaben verwaltet und erstellt werden"
+    "desc": "Hier können AG-Interne Aufgaben verwaltet und erstellt werden",
+    "description": "Beschreibung",
+    "stateOpen": "Noch offen",
+    "stateClosed": "Erledigt"
   },
   "profile": {
     "title": "Profil",

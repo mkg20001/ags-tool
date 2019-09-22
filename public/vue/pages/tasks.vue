@@ -17,19 +17,30 @@
       </template>
 
       <template slot="rowList" scope="t">
-        <tr v-for="row in t.data" @click="t.eView(row.id)">
+        <tr v-for="row in t.data" @click="/*t.eView(row.id)*/">
           <th scope="row">{{row.id}}</th>
           <td>{{row.title}}</td>
           <td>{{row.createdAt}}</td>
-          <td><a href="#" onclick="t.eView(row.id)"><i class="fas fa-link"></i></a></td>
-          <td><a v-if="$user.p.admin" href="#" onclick="t.eDelete(row.id)"><i class="fas fa-trash"></i></a></td>
+          <td><a @click="t.eView(row.id)"><i class="fas fa-link"></i></a></td>
+          <td><a v-if="$user.p.admin" @click="t.eDelete(row.id)"><i class="fas fa-trash"></i></a></td>
         </tr>
       </template>
 
       <template slot="singleView" scope="t">
         <br>
         <h1>{{ $t('tasks.single') }} {{t.item.title}}</h1>
+
         <br>
+        <div :class="(t.item.stateOpen ? 'bg-green' : 'bg-red') + ' task-bar'">
+          <i class="fa fa-info-circle"></i>
+          {{ t.item.stateTag || (t.item.stateOpen ? $t('tasks.stateOpen') : $t('tasks.stateClosed')) }}
+        </div>
+
+        <br>
+        <h2>{{ $t('tasks.description') }}</h2>
+        <div>
+          {{t.item.desc}}
+        </div>
       </template>
 
       <template slot="singleEdit" scope="t">

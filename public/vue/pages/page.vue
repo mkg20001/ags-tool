@@ -238,6 +238,28 @@ We have $id:
         } catch (err) {
           return (this.error = this.err.toString())
         }
+      },
+      deleteElement: async function (id) {
+        const result = await window.swal.fire({
+          title: `Delete Element ${id}`,
+          text: 'Are you sure?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Delete',
+          showLoaderOnConfirm: true,
+          preConfirm: async (login) => {
+            let res = await window.fetch(`/api/v0/${this.resource}/${id}`, {method: 'DELETE'})
+            res = await res.json()
+            if (res.ok) {
+              window.swal.fire('Deleted', 'Element was deleted', 'success')
+              await this.getViewFromRoute()
+            } else {
+              window.swal.error('Error', res.error, 'error')
+            }
+          }
+        })
       }
     },
     data: () => ({

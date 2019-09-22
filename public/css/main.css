@@ -36,6 +36,20 @@ body {
   margin-left: .1em;
 }
 
+/* Tasks */
+
+.task-bar {
+  padding: 1em;
+}
+
+.bg-red {
+  background: #ff000060;
+}
+
+.bg-green {
+  background: #00ff0060;
+}
+
 /* Nav */
 
 nav {

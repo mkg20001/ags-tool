@@ -223,9 +223,9 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
         await m('post', 'delete', request, h, deleted)
 
         if (deleted) {
-          return h.response({ok: true}).code(204)
+          return h.response({ok: true}).code(200)
         } else {
-          return h.response({ok: true, soft404: true}).code(204)
+          return h.response({ok: true, soft404: true}).code(200)
         }
       } catch (error) {
         throw Boom.badImplementation(error.message)
