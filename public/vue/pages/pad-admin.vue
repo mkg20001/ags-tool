@@ -22,8 +22,8 @@
         <th scope="row">{{t.row.id}}</th>
         <td>{{t.row.createdAt}}</td>
         <td><a :href="'/pad/' + t.row.id"><i class="fas fa-link"></i></a></td>
-        <td><a href="#" onclick="archivePad(t.row.id)"><i class="fas fa-archive"></i></a></td>
-        <td><a href="#" onclick="t.eDelete()"><i class="fas fa-trash"></i></a></td>
+        <td><a @click="archivePad(t.row.id)"><i class="fas fa-archive"></i></a></td>
+        <td><a @click="t.eDelete()"><i class="fas fa-trash"></i></a></td>
       </template>
 
       <template slot="singleEdit" scope="t">

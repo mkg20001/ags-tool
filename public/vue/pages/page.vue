@@ -92,6 +92,13 @@ We have $id:
 
 */
 
+const Toast = window.swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 5000
+})
+
   export default {
     name: 'page',
     props: {
@@ -233,6 +240,7 @@ We have $id:
             this.view = 'single'
             return (this.error = data.error)
           } else {
+            Toast.fire({type: 'success', title: 'Saved'})
             this.changeView()
           }
         } catch (err) {
@@ -240,7 +248,7 @@ We have $id:
         }
       },
       deleteElement: async function (id) {
-        const result = await window.swal.fire({
+        const result = await window.swal.queue([{
           title: `Delete Element ${id}`,
           text: 'Are you sure?',
           type: 'warning',
@@ -253,13 +261,25 @@ We have $id:
             let res = await window.fetch(`/api/v0/${this.resource}/${id}`, {method: 'DELETE'})
             res = await res.json()
             if (res.ok) {
-              window.swal.fire('Deleted', 'Element was deleted', 'success')
               await this.getViewFromRoute()
+              Toast.insertQueueStep({
+                type: 'success',
+                title: 'Deleted',
+                // mixin (https://github.com/sweetalert2/sweetalert2/issues/1746)
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000
+              })
             } else {
-              window.swal.error('Error', res.error, 'error')
+              window.swal.insertQueueStep({
+                type: 'error',
+                title: 'Error',
+                text: res.error
+              })
             }
           }
-        })
+        }])
       }
     },
     data: () => ({
