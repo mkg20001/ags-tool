@@ -24,9 +24,9 @@
           </tr>
         </thead>
         <tbody>
-          <slot name="rowOuter" :data="data">
+          <slot name="rowList" :data="data" :eDelete="(id) => deleteElement(id)" :eView="(id) => changeView(id)" :eEdit="(id) => changeView(id, {edit: '1'})">
             <tr v-for="row in data">
-              <slot name="row" :row="row">
+              <slot name="row" :row="row" :eDelete="() => deleteElement(row.id)" :eView="() => changeView(row.id)" :eEdit="() => changeView(row.id, {edit: '1'})">
                 <th scope="row">{{row.id}}</th>
               </slot>
             </tr>
@@ -38,17 +38,28 @@
         <div v-if="allowCreate" @click="changeView('create')" class="btn btn-danger btn-fab"><i class="fas fa-plus"></i></div>
       </slot>
     </div>
-    <div v-else-if="view === 'single'">
-      <slot name="singleOuter">
+    <div v-else-if="view === 'singleEdit'">
+      <slot name="singleEditOuter">
         <form>
-          <slot name="single" :isCreate="$route.params.id === 'create'" :item="item">
-            <h2>ERROR: {{resource}} single-view not implemented</h2>
+          <slot name="singleEdit" :isCreate="$route.params.id === 'create'" :item="item">
+            <h2>ERROR: {{resource}} single-edit not implemented</h2>
           </slot>
-          <slot name="singleActions" :isCreate="$route.params.id === 'create'" :item="item">
+          <slot name="singleEditActions" :isCreate="$route.params.id === 'create'" :item="item">
             <div v-if="$route.params.id === 'create'" @click="submit()" class="btn btn-info btn-fab"><i class="fas fa-check"></i></div>
             <div v-else @click="submit()" class="btn btn-info btn-fab"><i class="fas fa-save"></i></div>
           </slot>
         </form>
+      </slot>
+    </div>
+    <div v-else-if="view === 'singleView'">
+      <slot name="singleViewOuter">
+        <slot name="singleView" :item="item">
+          <h2>ERROR: {{resource}} single-view not implemented</h2>
+        </slot>
+        <slot name="singleViewActions" :eEdit="() => changeView(item.id, {edit: '1'})" :item="item">
+          <div v-if="false" todo="fix multifabs" @click="window.history.back()" class="btn btn-info btn-fab"><i class="fas fa-arrow-left"></i></div>
+          <div v-if="allowEdit" @click="changeView(item.id, {edit: '1'})" class="btn btn-info btn-fab"><i class="fas fa-pen"></i></div>
+        </slot>
       </slot>
     </div>
     <div v-else-if="view === 'loading'">
@@ -87,7 +98,11 @@ We have $id:
       resource: String,
       tableClass: String,
       defaults: Object,
-      allowCreate: Boolean
+      allowCreate: Boolean,
+      allowView: Boolean,
+      allowEdit: Boolean,
+      allowDelete: Boolean,
+      enableDirectEdit: Boolean
     },
     methods: {
       getPageParams: function (gotoPage, relPage, perPage) {
@@ -126,9 +141,9 @@ We have $id:
         newRoute.query = this.getPageParams(...a)
         this.$router.push(newRoute)
       },
-      changeView: function (view) {
+      changeView: function (view, query) {
         const newRoute = Object.assign({}, this.$route)
-        delete newRoute.query
+        newRoute.query = query
         // TODO: make better
         const hasView = newRoute.params.id != null
         if (view) {
@@ -153,7 +168,7 @@ We have $id:
           case id === 'create': {
             if (this.allowCreate) {
               this.item = this.defaults || {}
-              this.view = 'single'
+              this.view = 'singleEdit'
             } else {
               this.error = 'Create not allowed. Perhaps you need to sign-in?'
             }
@@ -161,11 +176,27 @@ We have $id:
           }
           case Boolean(id): {
             this.view = 'loading'
-            try {
-              await this.fetchSingle(id)
-              this.view = 'single'
-            } catch (err) {
-              this.error = err.toString()
+            if (this.allowView || this.allowEdit) {
+              try {
+                await this.fetchSingle(id)
+                if (this.$route.query.edit || this.enableDirectEdit) {
+                  if (this.allowEdit) {
+                    this.view = 'singleEdit'
+                  } else {
+                    this.error = 'Edit not allowed. Perhaps you need to sign-in?'
+                  }
+                } else {
+                  if (this.allowView) {
+                    this.view = 'singleView'
+                  } else {
+                    this.error = 'View not allowed. Perhaps you need to sign-in?'
+                  }
+                }
+              } catch (err) {
+                this.error = err.toString()
+              }
+            } else {
+              this.error = 'Single view not allowed. Perhaps you need to sign-in?'
             }
             break
           }

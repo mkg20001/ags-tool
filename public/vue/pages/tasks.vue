@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page resource="tasks" tableClass="table table-hover" :allowCreate="$user.loggedIn">
+    <page resource="tasks" tableClass="table table-hover" :allowCreate="$user.loggedIn" :allowView="true" :allowEdit="$user.loggedIn">
       <template v-slot:headerTable>
         <br>
         <h1>{{ $t('tasks.title') }}</h1>
@@ -17,16 +17,22 @@
       </template>
 
       <template slot="rowList" scope="t">
-        <tr v-for="row in t.data">
+        <tr v-for="row in t.data" @click="t.eView(row.id)">
           <th scope="row">{{row.id}}</th>
           <td>{{row.title}}</td>
           <td>{{row.createdAt}}</td>
-          <td><a :href="'/task/' + row.id"><i class="fas fa-link"></i></a></td>
-          <td><a v-if="$user.p.admin" href="#" onclick="deleteprotokoll(row.id)"><i class="fas fa-trash"></i></a></td>
+          <td><a href="#" onclick="t.eView(row.id)"><i class="fas fa-link"></i></a></td>
+          <td><a v-if="$user.p.admin" href="#" onclick="t.eDelete(row.id)"><i class="fas fa-trash"></i></a></td>
         </tr>
       </template>
 
-      <template slot="single" scope="t">
+      <template slot="singleView" scope="t">
+        <br>
+        <h1>{{ $t('tasks.single') }} {{t.item.title}}</h1>
+        <br>
+      </template>
+
+      <template slot="singleEdit" scope="t">
         <br>
         <h1 v-if="t.isCreate">{{ $t('tasks.createTitle') }}</h1>
         <h1 v-else>{{ $t('tasks.single') }} {{t.item.title}}</h1>
@@ -51,6 +57,7 @@
   export default {
     name: 'tasks',
     data: () => ({ }),
+    methods: {log: console.log},
     components: {
       page
     }
