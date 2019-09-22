@@ -26,5 +26,16 @@
   "pad": {
     "title": "Pad",
     "select": "Pad-Id"
+  },
+  "page": {
+    "delete": "Delete",
+    "deleted": "Deleted",
+    "saved": "Saved",
+    "deleteElement": "Delete Element %",
+    "areYouSure": "Are you sure?",
+    "createNotAllowed": "Creating items not allowed",
+    "editNotAllowed": "Editing not allowed",
+    "viewNotAllowed": "Viewing not allowed",
+    "signIn": "Perhaps you need to sign-in?"
   }
 }

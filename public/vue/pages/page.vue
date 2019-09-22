@@ -177,7 +177,7 @@ const Toast = window.swal.mixin({
               this.item = Object.assign({}, this.defaults || {})
               this.view = 'singleEdit'
             } else {
-              this.error = 'Create not allowed. Perhaps you need to sign-in?'
+              this.error = `${this.$t('page.createNotAllowed')}. ${this.$t('page.signIn')}`
             }
             break
           }
@@ -190,20 +190,20 @@ const Toast = window.swal.mixin({
                   if (this.allowEdit) {
                     this.view = 'singleEdit'
                   } else {
-                    this.error = 'Edit not allowed. Perhaps you need to sign-in?'
+                    this.error = `${this.$t('page.editNotAllowed')}. ${this.$t('page.signIn')}`
                   }
                 } else {
                   if (this.allowView) {
                     this.view = 'singleView'
                   } else {
-                    this.error = 'View not allowed. Perhaps you need to sign-in?'
+                    this.error = `${this.$t('page.viewNotAllowed')}. ${this.$t('page.signIn')}`
                   }
                 }
               } catch (err) {
                 this.error = err.toString()
               }
             } else {
-              this.error = 'Single view not allowed. Perhaps you need to sign-in?'
+              this.error = `${this.$t('page.viewNotAllowed')}. ${this.$t('page.signIn')}`
             }
             break
           }
@@ -240,7 +240,7 @@ const Toast = window.swal.mixin({
             this.view = 'single'
             return (this.error = data.error)
           } else {
-            Toast.fire({type: 'success', title: 'Saved'})
+            Toast.fire({type: 'success', title: this.$t('page.saved')})
             this.changeView()
           }
         } catch (err) {
@@ -249,13 +249,13 @@ const Toast = window.swal.mixin({
       },
       deleteElement: async function (id) {
         const result = await window.swal.queue([{
-          title: `Delete Element ${id}`,
-          text: 'Are you sure?',
+          title: this.$t('page.deleteElement').replace('%', id),
+          text: this.$t('page.areYouSure'),
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Delete',
+          confirmButtonText: this.$t('page.delete'),
           showLoaderOnConfirm: true,
           preConfirm: async (login) => {
             let res = await window.fetch(`/api/v0/${this.resource}/${id}`, {method: 'DELETE'})
@@ -264,7 +264,7 @@ const Toast = window.swal.mixin({
               await this.getViewFromRoute()
               Toast.insertQueueStep({
                 type: 'success',
-                title: 'Deleted',
+                title: this.$t('page.deleted'),
                 // mixin (https://github.com/sweetalert2/sweetalert2/issues/1746)
                 toast: true,
                 position: 'top-end',
@@ -274,7 +274,7 @@ const Toast = window.swal.mixin({
             } else {
               window.swal.insertQueueStep({
                 type: 'error',
-                title: 'Error',
+                title: this.$t('page.error'),
                 text: res.error
               })
             }

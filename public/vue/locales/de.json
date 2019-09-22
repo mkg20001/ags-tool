@@ -52,5 +52,16 @@
     "desc": "Hier kann das Nutzerprofil bearbeitet werden",
     "name": "Angezeigter Name",
     "email": "E-Mail"
+  },
+  "page": {
+    "delete": "Löschen",
+    "deleted": "Gelöscht",
+    "saved": "Gespeichert",
+    "deleteElement": "Element % Löschen",
+    "areYouSure": "Sicher?",
+    "createNotAllowed": "Erstellen nicht erlaubt",
+    "editNotAllowed": "Editieren nicht erlaubt",
+    "viewNotAllowed": "Einsehen nicht erlaubt",
+    "signIn": "Eventuell ist eine Anmeldung erforderlich?"
   }
 }
