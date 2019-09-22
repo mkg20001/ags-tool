@@ -30,7 +30,9 @@
   },
   "padadmin": {
     "title": "Pad-Verwaltung",
-    "desc": "Hier können erstellte Pads verwaltet und zu Sitzungsprotokollen archiviert werden"
+    "desc": "Hier können erstellte Pads verwaltet und zu Sitzungsprotokollen archiviert werden",
+    "selectTemplate": "Vorlage auswählen",
+    "create": "Pad erstellen"
   },
   "protokolle": {
     "title": "Protokolle",

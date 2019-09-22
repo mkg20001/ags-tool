@@ -167,7 +167,7 @@ We have $id:
         switch (true) {
           case id === 'create': {
             if (this.allowCreate) {
-              this.item = this.defaults || {}
+              this.item = Object.assign({}, this.defaults || {})
               this.view = 'singleEdit'
             } else {
               this.error = 'Create not allowed. Perhaps you need to sign-in?'
