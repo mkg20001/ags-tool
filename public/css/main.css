@@ -36,6 +36,14 @@ body {
   margin-left: .1em;
 }
 
+.btn-purple {
+  background: #563d7c;
+}
+
+.btn-purple:hover {
+  background: #452c6b;
+}
+
 /* Tasks */
 
 .task-bar {
@@ -48,6 +56,29 @@ body {
 
 .bg-green {
   background: #00ff0060;
+}
+
+/* Projects */
+
+.pr-list {
+  display: flex;
+  justify-content: space-around;
+  min-width: 256px;
+}
+
+.pr-box {
+  flex-grow: 1 !important;
+  padding: 1em;
+  color: white;
+  height: 45vh;
+  max-height: 45vh;
+  overflow: auto;
+  word-wrap: break-word;
+  min-width: 256px;
+}
+
+.pr-list {
+
 }
 
 /* Nav */

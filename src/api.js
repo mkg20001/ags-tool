@@ -103,6 +103,8 @@ module.exports = async (server, sequelize, config) => {
     title: Sequelize.STRING,
     desc: Sequelize.STRING(Math.pow(2, 14)),
     maintainer: Sequelize.INTEGER,
+    maintainerUrl: Sequelize.STRING(256),
+    colorSeed: Sequelize.STRING(32),
 
     acl: Sequelize.JSONB // {id<user>, canAddUsers, canRemoveUsers, canEdit}
   }, { sequelize, modelName: 'project' })

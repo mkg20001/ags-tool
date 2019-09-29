@@ -46,6 +46,7 @@
     "pg-hstore": "^2.3.3",
     "popper.js": "^1.15.0",
     "sequelize": "^5.19.1",
+    "string-to-color": "^2.1.1",
     "sweetalert2": "^8.17.6",
     "vue": "^2.6.10",
     "vue-global-options": "^1.0.1",
