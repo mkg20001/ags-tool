@@ -52,7 +52,8 @@
     "createTitle": "Projekt erstellen",
     "single": "Projekt",
     "desc": "Hier sind die verschiedenen Projekte der Piratenpartei",
-    "description": "Beschreibung"
+    "description": "Beschreibung",
+    "maintainer": "Organisator"
   },
   "profile": {
     "title": "Profil",

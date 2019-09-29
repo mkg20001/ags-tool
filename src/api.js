@@ -59,37 +59,6 @@ module.exports = async (server, sequelize, config) => {
     }
   })
 
-  /* Tasks */
-
-  class Task extends Sequelize.Model {}
-  Task.init({
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-
-    title: Sequelize.STRING,
-    desc: Sequelize.STRING(Math.pow(2, 14)),
-    stateOpen: Sequelize.BOOLEAN,
-    stateTag: Sequelize.STRING(50),
-
-    acl: Sequelize.JSONB // {id<user>, canAddUsers, canRemoveUsers, canEdit}
-  }, { sequelize, modelName: 'task' })
-
-  await CRUD({
-    server,
-    model: Task,
-    name: 'tasks',
-    prefix: '/api/v0',
-    auth: {
-      create: 'session:admin',
-      // read
-      update: 'session',
-      delete: 'session:admin'
-    }
-  })
-
   /* Projects */
 
   class Project extends Sequelize.Model {}
@@ -113,6 +82,44 @@ module.exports = async (server, sequelize, config) => {
     server,
     model: Project,
     name: 'projects',
+    prefix: '/api/v0',
+    auth: {
+      create: 'session:admin',
+      // read
+      update: 'session',
+      delete: 'session:admin'
+    }
+  })
+
+  /* Tasks */
+
+  class Task extends Sequelize.Model {}
+  Task.init({
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+
+    title: Sequelize.STRING,
+    desc: Sequelize.STRING(Math.pow(2, 14)),
+    state: Sequelize.INTEGER,
+    stateTag: Sequelize.STRING(50),
+    projectId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'projects',
+        key: 'id'
+      }
+    },
+
+    acl: Sequelize.JSONB // {id<user>, canAddUsers, canRemoveUsers, canEdit}
+  }, { sequelize, modelName: 'task' })
+
+  await CRUD({
+    server,
+    model: Task,
+    name: 'tasks',
     prefix: '/api/v0',
     auth: {
       create: 'session:admin',

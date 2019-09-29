@@ -11,8 +11,8 @@
       <template slot="contentTable" scope="t">
         <div class="pr-list">
           <div :style="'background: ' + color(row.colorSeed || row.id)" class="pr-box" v-for="row in t.data">
-            <h1 @click="t.eView(row.id)">{{row.title}}</h1>
-            <h4 v-for="line in row.desc.split('\n')">{{line}}</h4>
+            <h1 @click="t.eView(row.id)" class="pointy-thingy">{{row.title}}</h1>
+            <h4 v-for="line in (row.desc || '').split('\n')">{{line}}</h4>
           </div>
         </div>
         <table>
@@ -30,7 +30,7 @@
 
         <br>
         <h2>{{ $t('projects.description') }}</h2>
-        <p v-for="line in t.item.desc.split('\n')">{{line}}</p>
+        <p v-for="line in (t.item.desc || '').split('\n')">{{line}}</p>
       </template>
 
       <template slot="singleEdit" scope="t">

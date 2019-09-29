@@ -54,8 +54,20 @@ body {
   background: #ff000060;
 }
 
+.bg-yellow {
+  background: #ffff0060;
+}
+
 .bg-green {
   background: #00ff0060;
+}
+
+.pointy-thingy {
+  cursor: pointer;
+}
+
+.pointy-thingy:hover {
+  text-decoration: underline;
 }
 
 /* Projects */
@@ -86,12 +98,6 @@ body {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-
-  cursor: pointer;
-}
-
-.pr-box h1:hover {
-  text-decoration: underline;
 }
 
 /* Nav */
