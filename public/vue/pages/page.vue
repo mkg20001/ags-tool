@@ -188,7 +188,9 @@ const Toast = window.swal.mixin({
             if (this.allowView || this.allowEdit) {
               try {
                 await this.fetchSingle(id)
-                if (this.$route.query.edit || this.enableDirectEdit) {
+                if (this.item.error) {
+                  return (this.error = this.item.error)
+                } else if (this.$route.query.edit || this.enableDirectEdit) {
                   if (this.allowEdit) {
                     this.view = 'singleEdit'
                   } else {

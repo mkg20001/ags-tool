@@ -47,6 +47,13 @@
     "stateOpen": "Noch offen",
     "stateClosed": "Erledigt"
   },
+  "projects": {
+    "title": "Projekte",
+    "createTitle": "Projekt erstellen",
+    "single": "Projekt",
+    "desc": "Hier sind die verschiedenen Projekte der Piratenpartei",
+    "description": "Beschreibung"
+  },
   "profile": {
     "title": "Profil",
     "desc": "Hier kann das Nutzerprofil bearbeitet werden",

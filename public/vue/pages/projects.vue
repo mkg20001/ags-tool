@@ -10,8 +10,8 @@
 
       <template slot="contentTable" scope="t">
         <div class="pr-list">
-          <div @click="t.eView(row.id)" :style="'background: ' + color(row.colorSeed || row.id)" class="pr-box" v-for="row in t.data">
-            <h1>{{row.title}}</h1>
+          <div :style="'background: ' + color(row.colorSeed || row.id)" class="pr-box" v-for="row in t.data">
+            <h1 @click="t.eView(row.id)">{{row.title}}</h1>
             <h4 v-for="line in row.desc.split('\n')">{{line}}</h4>
           </div>
         </div>
@@ -26,16 +26,11 @@
         <h1>{{ $t('projects.single') }} {{t.item.title}}</h1>
 
         <br>
-        <div :class="(t.item.stateOpen ? 'bg-green' : 'bg-red') + ' task-bar'">
-          <i class="fa fa-info-circle"></i>
-          {{ t.item.stateTag || (t.item.stateOpen ? $t('projects.stateOpen') : $t('projects.stateClosed')) }}
-        </div>
+        <h2>{{ $t('projects.maintainer') }}: <a :href="t.item.maintainerUrl">{{t.item.maintainer}}</a></h2>
 
         <br>
         <h2>{{ $t('projects.description') }}</h2>
-        <div>
-          {{t.item.desc}}
-        </div>
+        <p v-for="line in t.item.desc.split('\n')">{{line}}</p>
       </template>
 
       <template slot="singleEdit" scope="t">
@@ -45,8 +40,10 @@
         <br>
 
         <input class="f f-input" type="text" v-model="t.item.title" placeholder="Titel"></input>
+        <input class="f f-input" type="text" v-model="t.item.maintainer" placeholder="Maintainer"></input>
+        <input class="f f-input" type="text" v-model="t.item.maintainerUrl" placeholder="Maintainer URL (bspws mailto:email@example.com, https://wiki.piratenpartei.de/...)"></input>
         <textarea class="f f-textarea" v-model="t.item.desc" placeholder="Beschreibung (bis zu 16384 Zeichen)"></textarea>
-        <textarea class="f f-textarea" v-model="t.item.colorSeed" placeholder="Color Seed"></textarea>
+        <input class="f f-input" type="text" v-model="t.item.colorSeed" placeholder="Englische Zufallsbegriffe für Hintergrundfarbe (optional)"></input>
       </template>
     </page>
 
