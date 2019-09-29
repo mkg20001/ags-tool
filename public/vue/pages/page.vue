@@ -15,24 +15,26 @@
         <h1>{{resource}}</h1>
       </slot>
 
-      <table :class="tableClass">
-        <thead>
-          <tr>
-            <slot name="headerRow">
-              <th scope="col">#</th>
-            </slot>
-          </tr>
-        </thead>
-        <tbody>
-          <slot name="rowList" :data="data" :eDelete="(id) => deleteElement(id)" :eView="(id) => changeView(id)" :eEdit="(id) => changeView(id, {edit: '1'})">
-            <tr v-for="row in data">
-              <slot name="row" :row="row" :eDelete="() => deleteElement(row.id)" :eView="() => changeView(row.id)" :eEdit="() => changeView(row.id, {edit: '1'})">
-                <th scope="row">{{row.id}}</th>
+      <slot name="contentTable" :data="data" :eDelete="(id) => deleteElement(id)" :eView="(id) => changeView(id)" :eEdit="(id) => changeView(id, {edit: '1'})">>
+        <table :class="tableClass">
+          <thead>
+            <tr>
+              <slot name="headerRow">
+                <th scope="col">#</th>
               </slot>
             </tr>
-          </slot>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <slot name="rowList" :data="data" :eDelete="(id) => deleteElement(id)" :eView="(id) => changeView(id)" :eEdit="(id) => changeView(id, {edit: '1'})">
+              <tr v-for="row in data">
+                <slot name="row" :row="row" :eDelete="() => deleteElement(row.id)" :eView="() => changeView(row.id)" :eEdit="() => changeView(row.id, {edit: '1'})">
+                  <th scope="row">{{row.id}}</th>
+                </slot>
+              </tr>
+            </slot>
+          </tbody>
+        </table>
+      </slot>
 
       <slot name="tadd" :link="() => changeView('create')">
         <div v-if="allowCreate" @click="changeView('create')" class="btn btn-danger btn-fab"><i class="fas fa-plus"></i></div>

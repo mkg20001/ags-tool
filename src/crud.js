@@ -77,12 +77,14 @@ module.exports = ({server, model, name, prefix, auth, middleware}) => {
       }
     }
 
-    if (middleware[name]) {
-      const a = Array.isArray(middleware[name]) ? middleware[name] : [middleware[name]]
-      for (let i = 0; i < a.length; i++) {
-        await a[i](parsed, request, h)
+    await Promise.all([`${type}:${stage}`, type].map(async (name) => {
+      if (middleware[name]) {
+        const a = Array.isArray(middleware[name]) ? middleware[name] : [middleware[name]]
+        for (let i = 0; i < a.length; i++) {
+          await a[i](parsed, {request, h, model})
+        }
       }
-    }
+    }))
   }
 
   // C is for Create
