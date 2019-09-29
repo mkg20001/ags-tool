@@ -9,8 +9,8 @@
       </template>
 
       <template slot="contentTable" scope="t">
-        <div class="pr-list row">
-          <div @click="t.eView(row.id)" :style="'background: ' + color(row.colorSeed || row.id)" class="pr-box col-sm-6 col-md-3 col-lg-2" v-for="row in t.data">
+        <div class="pr-list">
+          <div @click="t.eView(row.id)" :style="'background: ' + color(row.colorSeed || row.id)" class="pr-box" v-for="row in t.data">
             <h1>{{row.title}}</h1>
             <h4 v-for="line in row.desc.split('\n')">{{line}}</h4>
           </div>

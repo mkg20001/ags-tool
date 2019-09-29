@@ -63,22 +63,29 @@ body {
 .pr-list {
   display: flex;
   justify-content: space-around;
-  min-width: 256px;
+  flex-wrap: wrap !important;
+  flex-direction: row;
 }
 
 .pr-box {
-  flex-grow: 1 !important;
-  padding: 1em;
-  color: white;
   height: 45vh;
   max-height: 45vh;
   overflow: auto;
   word-wrap: break-word;
-  min-width: 256px;
+
+  padding: 1em;
+  color: white;
+
+  width: 25em;
+
+  flex-grow: 1;
 }
 
-.pr-list {
-
+.pr-box h1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Nav */
