@@ -51,7 +51,7 @@
 
         <input class="f f-input" type="text" v-model="t.item.title" placeholder="Titel"></input>
         <textarea class="f f-textarea" v-model="t.item.desc" placeholder="Beschreibung (bis zu 16384 Zeichen)"></textarea>
-        <div class="f f-label"><input type="checkbox" class="f f-checkbox" v-model="t.item.stateOpen">Offen/Erledigt</div>
+        <div class="f f-label"><input type="checkbox" class="f f-checkbox" v-model="t.item.stateOpen">Erledigt</div>
         <input class="f f-input" type="text" v-model="t.item.stateTag" placeholder="Genauere Beschreibung des aktuellen Status">
       </template>
     </page>

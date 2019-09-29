@@ -36,6 +36,14 @@ body {
   margin-left: .1em;
 }
 
+.btn-purple {
+  background: #563d7c;
+}
+
+.btn-purple:hover {
+  background: #452c6b;
+}
+
 /* Tasks */
 
 .task-bar {
@@ -48,6 +56,42 @@ body {
 
 .bg-green {
   background: #00ff0060;
+}
+
+/* Projects */
+
+.pr-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap !important;
+  flex-direction: row;
+}
+
+.pr-box {
+  height: 45vh;
+  max-height: 45vh;
+  overflow: auto;
+  word-wrap: break-word;
+
+  padding: 1em;
+  color: white;
+
+  width: 25em;
+
+  flex-grow: 1;
+}
+
+.pr-box h1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  cursor: pointer;
+}
+
+.pr-box h1:hover {
+  text-decoration: underline;
 }
 
 /* Nav */

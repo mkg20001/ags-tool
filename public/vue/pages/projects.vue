@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page resource="projects" tableClass="table table-hover" :allowCreate="$user.loggedIn" :allowView="true" :allowEdit="$user.loggedIn">
+    <page resource="projects" :allowCreate="$user.loggedIn" :allowView="true" :allowEdit="$user.loggedIn">
       <template v-slot:headerTable>
         <br>
         <h1>{{ $t('projects.title') }}</h1>
@@ -8,22 +8,17 @@
         <br>
       </template>
 
-      <template v-slot:headerRow>
-        <th style="width: 8px;" scope="col">#</th>
-        <th scope="col">Titel</th>
-        <th scope="col">Erstellt am</th>
-        <th style="width: 8px;" scope="col"><i class="fas fa-link"></i></th>
-        <th v-if="$user.p.admin" style="width: 8px;" scope="col"><i class="fas fa-trash"></i></th>
-      </template>
-
-      <template slot="rowList" scope="t">
-        <tr v-for="row in t.data" @click="/*t.eView(row.id)*/">
-          <th scope="row">{{row.id}}</th>
-          <td>{{row.title}}</td>
-          <td>{{row.createdAt}}</td>
-          <td><a @click="t.eView(row.id)"><i class="fas fa-link"></i></a></td>
-          <td><a v-if="$user.p.admin" @click="t.eDelete(row.id)"><i class="fas fa-trash"></i></a></td>
-        </tr>
+      <template slot="contentTable" scope="t">
+        <div class="pr-list">
+          <div :style="'background: ' + color(row.colorSeed || row.id)" class="pr-box" v-for="row in t.data">
+            <h1 @click="t.eView(row.id)">{{row.title}}</h1>
+            <h4 v-for="line in row.desc.split('\n')">{{line}}</h4>
+          </div>
+        </div>
+        <table>
+          <tbody>
+          </tbody>
+        </table>
       </template>
 
       <template slot="singleView" scope="t">
@@ -31,16 +26,11 @@
         <h1>{{ $t('projects.single') }} {{t.item.title}}</h1>
 
         <br>
-        <div class"bg-blue task-bar>
-          <i class="fa fa-info-circle"></i>
-          {{ $t('projects.tasksLink') }}
-        </div>
+        <h2>{{ $t('projects.maintainer') }}: <a :href="t.item.maintainerUrl">{{t.item.maintainer}}</a></h2>
 
         <br>
         <h2>{{ $t('projects.description') }}</h2>
-        <div>
-          {{t.item.desc}}
-        </div>
+        <p v-for="line in t.item.desc.split('\n')">{{line}}</p>
       </template>
 
       <template slot="singleEdit" scope="t">
@@ -50,7 +40,10 @@
         <br>
 
         <input class="f f-input" type="text" v-model="t.item.title" placeholder="Titel"></input>
+        <input class="f f-input" type="text" v-model="t.item.maintainer" placeholder="Maintainer"></input>
+        <input class="f f-input" type="text" v-model="t.item.maintainerUrl" placeholder="Maintainer URL (bspws mailto:email@example.com, https://wiki.piratenpartei.de/...)"></input>
         <textarea class="f f-textarea" v-model="t.item.desc" placeholder="Beschreibung (bis zu 16384 Zeichen)"></textarea>
+        <input class="f f-input" type="text" v-model="t.item.colorSeed" placeholder="Englische Zufallsbegriffe für Hintergrundfarbe (optional)"></input>
       </template>
     </page>
 
@@ -62,11 +55,14 @@
 
 <script>
   import page from './page.vue'
+  import color from 'string-to-color'
 
   export default {
     name: 'projects',
     data: () => ({ }),
-    methods: {log: console.log},
+    methods: {
+      color
+    },
     components: {
       page
     }
