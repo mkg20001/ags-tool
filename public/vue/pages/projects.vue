@@ -31,9 +31,9 @@
         <h1>{{ $t('projects.single') }} {{t.item.title}}</h1>
 
         <br>
-        <div class"bg-blue task-bar>
+        <div :class="(t.item.stateOpen ? 'bg-green' : 'bg-red') + ' task-bar'">
           <i class="fa fa-info-circle"></i>
-          {{ $t('projects.tasksLink') }}
+          {{ t.item.stateTag || (t.item.stateOpen ? $t('projects.stateOpen') : $t('projects.stateClosed')) }}
         </div>
 
         <br>
@@ -51,6 +51,8 @@
 
         <input class="f f-input" type="text" v-model="t.item.title" placeholder="Titel"></input>
         <textarea class="f f-textarea" v-model="t.item.desc" placeholder="Beschreibung (bis zu 16384 Zeichen)"></textarea>
+        <div class="f f-label"><input type="checkbox" class="f f-checkbox" v-model="t.item.stateOpen">Erledigt</div>
+        <input class="f f-input" type="text" v-model="t.item.stateTag" placeholder="Genauere Beschreibung des aktuellen Status">
       </template>
     </page>
 

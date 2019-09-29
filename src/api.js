@@ -90,6 +90,36 @@ module.exports = async (server, sequelize, config) => {
     }
   })
 
+  /* Projects */
+
+  class Project extends Sequelize.Model {}
+  Project.init({
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+
+    title: Sequelize.STRING,
+    desc: Sequelize.STRING(Math.pow(2, 14)),
+    maintainer: Sequelize.INTEGER,
+
+    acl: Sequelize.JSONB // {id<user>, canAddUsers, canRemoveUsers, canEdit}
+  }, { sequelize, modelName: 'project' })
+
+  await CRUD({
+    server,
+    model: Project,
+    name: 'projects',
+    prefix: '/api/v0',
+    auth: {
+      create: 'session:admin',
+      // read
+      update: 'session',
+      delete: 'session:admin'
+    }
+  })
+
   /* Protokolle */
 
   class Protokoll extends Sequelize.Model {}
