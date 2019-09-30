@@ -23,7 +23,7 @@
           </button>
         </a>
         <a href="/projects">
-          <button type="button" class="btn btn-info btn-purple bmd-btn-fab">
+          <button type="button" class="btn btn-purple bmd-btn-fab">
             <i class="fas fa-project-diagram"></i>
           </button>
         </a>

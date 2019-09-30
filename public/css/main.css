@@ -37,11 +37,12 @@ body {
 }
 
 .btn-purple {
-  background: #563d7c;
+  background: #563d7c !important;
+  color: white !important;
 }
 
 .btn-purple:hover {
-  background: #452c6b;
+  background: #452c6b !important;
 }
 
 /* Tasks */

@@ -16,13 +16,12 @@
 
     <br>
     <h2>{{ $t('settings.dark') }}</h2>
-    <div v-if="!isLive" class="lower-layer">
+    <div class="lower-layer">
       <label>
         <input type="checkbox" v-model="$ui.dark">
         {{ $t('settings.dark_desc') }}
       </label>
     </div>
-    <h4 v-else>TODO</h4>
   </div>
 </template>
 

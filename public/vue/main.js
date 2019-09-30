@@ -82,10 +82,18 @@ $(document).ready(async () => {
   let user
   let ui = {}
 
+  function userValueChange () {
+    if (ui.dark) {
+      $('body').removeClass('bs-light').addClass('bs-dark')
+    } else {
+      $('body').removeClass('bs-dark').addClass('bs-light')
+    }
+  }
+
   if (!await api.areWeLoggedInYet()) {
     user = {
       loggedIn: false,
-      config: {},
+      config: JSON.parse(window.localStorage.getItem('userconfig') || '{}'),
       permissions: [],
       p: {}
     }
@@ -94,6 +102,8 @@ $(document).ready(async () => {
   }
 
   user.config = ui = user.config || {} // sync
+
+  userValueChange()
 
   // hide spinner
   $('#load').hide()
@@ -115,7 +125,13 @@ $(document).ready(async () => {
       dark: false,
       showNav: false
     }, (key, newValue, ui) => {
-      return api.postJson('user/profile', {ui})
+      userValueChange()
+
+      if (user.isLoggedIn) {
+        return api.postJson('user/profile', {ui})
+      } else {
+        window.localStorage.setItem('userconfig', JSON.stringify(ui))
+      }
     })
   })
 })
