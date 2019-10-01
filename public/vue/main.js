@@ -124,11 +124,11 @@ $(document).ready(async () => {
     ui: syncedData(ui, {
       dark: false,
       showNav: false
-    }, (key, newValue, ui) => {
+    }, () => {
       userValueChange()
 
-      if (user.isLoggedIn) {
-        return api.postJson('user/profile', {ui})
+      if (user.loggedIn) {
+        api.postJson('user/profile', user).catch(console.error)
       } else {
         window.localStorage.setItem('userconfig', JSON.stringify(ui))
       }

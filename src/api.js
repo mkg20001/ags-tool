@@ -7,7 +7,7 @@ const Sequelize = require('sequelize')
 
 module.exports = async (server, sequelize, config) => {
   server.auth.strategy('sso', 'bell', config.sso)
-  const {User} = await Auth(server, sequelize)
+  await Auth(server, sequelize)
   server.auth.strategy('session', 'simplesession', {isDev: config.sso.isSecure === false})
 
   server.route({
@@ -40,7 +40,7 @@ module.exports = async (server, sequelize, config) => {
     options: {
       auth: 'session',
       handler: async (request, h) => {
-        const {id} = request.auth.credentials
+        const {update} = request.auth.credentials
 
         const {display, config, email} = request.payload
 
@@ -52,7 +52,7 @@ module.exports = async (server, sequelize, config) => {
           }
         }
 
-        await User.update(up, { where: { id } })
+        await update(up)
 
         return {ok: true}
       }

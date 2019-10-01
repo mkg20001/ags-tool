@@ -105,13 +105,23 @@ body {
 
 nav {
   padding: 1em;
-  background: white;
   border-radius: 0 0 0 0; /* TODO: add half-circle curve to bottom */
   /* height: 7em; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.bs-light nav {
   box-shadow: 2px 0 6px 4px grey;
+}
+
+.bs-dark nav {
+  box-shadow: 2px 0 6px 4px #202020;
+}
+
+.bs-dark nav a {
+  color: white !important;
 }
 
 /* Elements */

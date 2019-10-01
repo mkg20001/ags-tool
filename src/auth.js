@@ -36,6 +36,12 @@ module.exports = async function (server, sequelize, options) {
           throw Boom.unauthorized()
         }
 
+        sidVal.update = async (up) => {
+          await User.update(up, { where: { id: request.auth.credentials.id } })
+
+          await cache.set(request.state.sid, Object.assign(request.auth.credentials, up))
+        }
+
         return h.authenticated({ credentials: sidVal })
       }
     }
@@ -113,5 +119,5 @@ module.exports = async function (server, sequelize, options) {
     }
   })
 
-  return {User}
+  return {User, cache}
 }
