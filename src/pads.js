@@ -69,7 +69,7 @@ module.exports = async (server, sequelize, config) => {
         const res = {
           // all hail postgres master loki :P (thx for the query)
           rows: (await sequelize.query(`SELECT "delta"."padId", min("delta"."createdAt") AS created, max("delta"."createdAt") AS updated FROM delta group by "delta"."padId" OFFSET ${offset} LIMIT ${perPage};`))[0],
-          cols: await sequelize.query('SELECT COUNT(DISTINCT "delta"."padId") FROM delta;')
+          count: (await sequelize.query('SELECT COUNT(DISTINCT "delta"."padId") FROM delta;'))[0].count
         }
 
         const out = res.rows.map(id => { return { id } })
