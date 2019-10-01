@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="$ui.dark ? 'ui ui-dark' : 'ui'">
+  <div id="app" :class="'ui ui-' + ($ui.dark ? 'dark' : 'light')">
     <nav :class="'navbar ' + ($ui.dark ? 'navbar-dark bg-dark' : 'navbar-light bg-light')">
       <a class="navbar-brand" href="/">AGS Tool</a>
 

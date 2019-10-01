@@ -13,7 +13,7 @@ import syncedData from './syncedData'
 import '@forevolve/bootstrap-dark/scss/_toggle-light.scss'
 import '@forevolve/bootstrap-dark/scss/_toggle-dark.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import '../css/main.css'
+import '../css/main.scss'
 const $ = window.jQuery = require('jquery')
 
 if (!window.fetch) {

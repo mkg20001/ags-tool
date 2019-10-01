@@ -88,6 +88,13 @@ module.exports = async (server, sequelize, config) => {
       // read
       update: 'session',
       delete: 'session:admin'
+    },
+    middleware: {
+      pre: (parsed, {model}) => {
+        if (parsed.payload) {
+          // validate acl
+        }
+      }
     }
   })
 
