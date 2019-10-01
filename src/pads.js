@@ -66,15 +66,11 @@ module.exports = async (server, sequelize, config) => {
       try {
         const offset = (page - 1) * perPage
 
-        const res = await daPad.Delta.findAndCountAll({
-          limit: perPage,
-          offset,
-          order: [
-            ['padId', 'ASC']
-          ],
-          distinct: true,
-          col: 'delta.padId'
-        })
+        const res = {
+          // all hail postgres master loki :P (thx for the query)
+          rows: (await sequelize.query(`SELECT "delta"."padId", min("delta"."createdAt") AS created, max("delta"."createdAt") AS updated FROM delta group by "delta"."padId" OFFSET ${offset} LIMIT ${perPage};`))[0],
+          cols: await sequelize.query('SELECT COUNT(DISTINCT "delta"."padId") FROM delta;')
+        }
 
         const out = res.rows.map(id => { return { id } })
 
