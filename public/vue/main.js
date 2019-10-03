@@ -84,9 +84,9 @@ $(document).ready(async () => {
 
   function userValueChange () {
     if (ui.dark) {
-      $('body').removeClass('bs-light').addClass('bs-dark')
+      $('body').removeClass('bootstrap').addClass('bootstrap-dark')
     } else {
-      $('body').removeClass('bs-dark').addClass('bs-light')
+      $('body').removeClass('bootstrap-dark').addClass('bootstrap')
     }
   }
 
