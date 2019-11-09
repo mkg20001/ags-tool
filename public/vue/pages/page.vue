@@ -15,7 +15,7 @@
         <h1>{{resource}}</h1>
       </slot>
 
-      <slot name="contentTable" :data="data" :eDelete="(id) => deleteElement(id)" :eView="(id) => changeView(id)" :eEdit="(id) => changeView(id, {edit: '1'})">>
+      <slot name="contentTable" :data="data" :eDelete="(id) => deleteElement(id)" :eView="(id) => changeView(id)" :eEdit="(id) => changeView(id, {edit: '1'})">
         <table :class="tableClass">
           <thead>
             <tr>
