@@ -10,8 +10,9 @@ import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 
 import syncedData from './syncedData'
-import '@forevolve/bootstrap-dark/scss/_toggle-light.scss'
-import '@forevolve/bootstrap-dark/scss/_toggle-dark.scss'
+import '@forevolve/bootstrap-dark/scss/toggle-bootstrap.scss'
+import '@forevolve/bootstrap-dark/scss/toggle-bootstrap-dark.scss'
+
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '../css/main.scss'
 const $ = window.jQuery = require('jquery')
@@ -87,6 +88,10 @@ $(document).ready(async () => {
       $('body').removeClass('bootstrap').addClass('bootstrap-dark')
     } else {
       $('body').removeClass('bootstrap-dark').addClass('bootstrap')
+    }
+
+    if (window.app) {
+      window.app.$children[0].$forceUpdate()
     }
   }
 
